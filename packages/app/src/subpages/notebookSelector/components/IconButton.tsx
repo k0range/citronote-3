@@ -1,5 +1,4 @@
 import Tooltip from "@/components/Tooltip";
-import { useContext } from "react";
 
 export default function IconButton({
   icon: Icon,
