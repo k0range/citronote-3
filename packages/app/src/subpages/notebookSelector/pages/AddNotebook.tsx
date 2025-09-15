@@ -160,13 +160,19 @@ export default function AddNotebook({
           <Label>フォルダ</Label>
           <div className="flex items-center gap-3.5">
             <Button
-              onClick={() => {
-                window.showDirectoryPicker().then((dirHandle) => {
+              onClick={async () => {
+                try {
+                  const dirHandle = await window.showDirectoryPicker()
                   setFolderHandle(dirHandle);
                   if (notebookName === "") {
                     setNotebookName(dirHandle.name);
                   }
-                });
+                } catch (e) {
+                  if (!(e instanceof DOMException && e.name === "AbortError")) {
+                    alert("フォルダの選択に失敗しました。");
+                    console.error(e);
+                  }
+                }
               }}
             >
               参照
