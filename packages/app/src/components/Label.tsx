@@ -8,8 +8,8 @@ export default function Label({
   children: React.ReactNode;
 }) {
   return (
-    <label className={twMerge("block mt-5 mb-1 text-sm opacity-80", className)}>
+    <div className={twMerge("block mt-5 mb-1 text-sm opacity-80", className)}>
       {children}
-    </label>
+    </div>
   );
 }
