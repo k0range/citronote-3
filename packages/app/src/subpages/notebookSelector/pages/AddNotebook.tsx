@@ -105,7 +105,7 @@ export default function AddNotebook({
         <ArrowLeftIcon className="inline h-4 w-4 mr-1" />
         戻る
       </button>
-      <h2 className="text-xl opacityy-90 mt-1">新しいノートブック</h2>
+      <h2 className="text-xl mt-1">新しいノートブック</h2>
       <p className="opacity-85 mt-1 text-sm">
         Citronote はノートブックという単位でノートを保存します。
       </p>
