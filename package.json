@@ -3,12 +3,12 @@
   "version": "3.0.0",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "app": "pnpm -C packages/app",
     "desktop": "pnpm -C packages/desktop"
   },
   "engines": {
-    "pnpm": "10.13.1",
-    "npm": "please_use_pnpm_instead"
+    "pnpm": "10.13.1"
   },
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
