@@ -1,16 +1,22 @@
 export function cacheTheme() {
+  if (typeof window === "undefined" || !document?.body) return;
   const style = getComputedStyle(document.body);
-  const colorBackground1 = style
-    .getPropertyValue("--color-background-1")
-    .trim();
-  const colorColor = style.getPropertyValue("--color-color").trim();
-  localStorage.setItem(
-    "themeCache",
-    JSON.stringify({
-      background1: colorBackground1,
-      color: colorColor,
-    }),
-  );
+  
+  try {
+    const colorBackground1 = style
+      .getPropertyValue("--color-background-1")
+      .trim();
+    const colorColor = style.getPropertyValue("--color-color").trim ();
+    localStorage.setItem(
+      "themeCache",
+      JSON.stringify({
+        background1: colorBackground1,
+        color: colorColor,
+      }),
+    );
+  } catch {
+    // ignore: localStorageが無い場合など
+  }
 }
 
 export function clearLoading() {
