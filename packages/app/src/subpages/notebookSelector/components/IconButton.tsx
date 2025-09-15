@@ -5,7 +5,7 @@ export default function IconButton({
   onClick,
   tooltip,
 }: {
-  icon: React.ElementType;
+  icon: React.ComponentType<{ size?: number, className?: string }>;
   onClick: () => void;
   tooltip: string;
 }) {
