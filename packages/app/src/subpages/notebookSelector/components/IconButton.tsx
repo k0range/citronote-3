@@ -12,6 +12,9 @@ export default function IconButton({
   return (
     <Tooltip content={tooltip}>
       <button
+        type="button"
+        aria-label={tooltip}
+        title={tooltip}
         className="opacity-35 hover:opacity-60 transition-opacity duration-200 cursor-pointer"
         onClick={onClick}
       >
