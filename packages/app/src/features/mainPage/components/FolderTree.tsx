@@ -83,7 +83,7 @@ export default function FolderTree({ isRoot, folder, nest = 0 }: {
           nest={nest + 1}
           onSubmit={(name) => {
             notebook?.newFolder(folder.path + "/" + name).then((newFolder) => {
-              folderCreationStore.setParentPath(null);
+              folderCreationStore.reset();
               setChildren([
                 ...(children || []),
                 newFolder
@@ -93,7 +93,7 @@ export default function FolderTree({ isRoot, folder, nest = 0 }: {
             });
           }}
           onCancel={() => {
-            folderCreationStore.setParentPath(null);
+            folderCreationStore.reset();
           }}
         />
       )}

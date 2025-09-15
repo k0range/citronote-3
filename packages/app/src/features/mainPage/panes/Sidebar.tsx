@@ -1,9 +1,5 @@
 import { useState } from "react";
 import {
-  FolderIcon,
-  SearchIcon,
-  TagIcon,
-  EllipsisIcon,
   PlusIcon,
   ScrollIcon,
   NotebookIcon,
