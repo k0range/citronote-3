@@ -10,6 +10,8 @@ export abstract class BaseNote {
     this.fsMgr = fsMgr;
   }
 
+  async getExcerpt?(): Promise<string>;
+
   async init() {}
 }
 
@@ -17,8 +19,17 @@ export abstract class TextNote extends BaseNote {
   content?: string;
 
   async init() {
-    const file = await this.fsMgr.readFile(this.metadata.path);
-    this.content = file;
+    const fileUint = await this.fsMgr.readFile(this.metadata.path);
+    const decoder = new TextDecoder("utf-8");
+    const str = decoder.decode(fileUint);
+    this.content = str;
+  }
+
+  async getExcerpt(): Promise<string> {
+    const fileUint = await this.fsMgr.readFile(this.metadata.path);
+    const decoder = new TextDecoder("utf-8");
+    const str = decoder.decode(fileUint);
+    return str.replace(/\s+/g, " ").trim().slice(0, 60) || "";
   }
 
   async writeContent(content: string): Promise<void> {

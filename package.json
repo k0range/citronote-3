@@ -10,5 +10,12 @@
     "pnpm": "10.13.1",
     "npm": "please_use_pnpm_instead"
   },
-  "packageManager": "pnpm@10.13.1"
+  "packageManager": "pnpm@10.13.1",
+  "devDependencies": {
+    "@types/wicg-file-system-access": "^2023.10.6",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@types/react": "^19.1.12"
+  }
 }

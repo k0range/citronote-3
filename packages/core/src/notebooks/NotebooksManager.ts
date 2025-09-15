@@ -1,13 +1,13 @@
 import { Notebook } from "./Notebook";
-import { NotebookFsMgr, NotebookMetadata, NotebookStorage } from "./types";
+import { NotebookFsMgrClass, NotebookMetadata, NotebooksStorage } from "./types";
 
 export class NotebooksManager {
-  private storage: NotebookStorage;
-  private localFsMgr: NotebookFsMgr;
+  private storage: NotebooksStorage;
+  private localFsMgr: NotebookFsMgrClass;
 
   constructor({ storage, localFsMgr }: {
-    storage: NotebookStorage,
-    localFsMgr: NotebookFsMgr
+    storage: NotebooksStorage,
+    localFsMgr: NotebookFsMgrClass
   }) { // memo: localFsMgrを定義する側ではシングルトンとしてexportする
     this.storage = storage;
     this.localFsMgr = localFsMgr;
@@ -18,7 +18,7 @@ export class NotebooksManager {
 
     if (!metadata) return null;
 
-    let fsMgr: NotebookFsMgr | null = null;
+    let fsMgr: NotebookFsMgrClass | null = null;
     if (metadata.location === "local") {
       fsMgr = this.localFsMgr
     } else if (metadata.location === "cloud") {
@@ -34,9 +34,13 @@ export class NotebooksManager {
   }
 
   async fetchNotebooks() {
-    const metadatas = await this.storage.fetchNotebooks();
+    const metadatas = await this.storage.fetchNotebooks(); // storageに保存するときにiconも
 
     return metadatas
+  }
+
+  async getNotebookAtLocation(location: NotebookMetadata["locationHandle"]) {
+    return await this.storage.getNotebookAtLocation(location);
   }
 
   async addNotebook({ name, location, locationHandle }: {
@@ -44,11 +48,27 @@ export class NotebooksManager {
     location: "local" | "cloud";
     locationHandle: NotebookMetadata["locationHandle"];
   }) {
-    await this.storage.addNotebook({
+    if (await this.getNotebookAtLocation(locationHandle)) {
+      throw new Error("Notebook already exists at this location");
+    }
+
+    const metadata: NotebookMetadata = {
       id: crypto.randomUUID(),
       name,
       location,
       locationHandle,
-    });
+    };
+
+    await this.storage.addNotebook(metadata);
+
+    return metadata
+  }
+
+  async updateNotebook(notebook: NotebookMetadata) {
+    await this.storage.updateNotebook(notebook);
+  }
+
+  async removeNotebook(id: string) {
+    await this.storage.removeNotebook(id);
   }
 }

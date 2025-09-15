@@ -1,7 +1,7 @@
 import { NotebookFsMgr } from "../notebooks/types";
 import { NoteMetadata, Notetype, NotetypeInfo } from "./types";
 
-export class NotetypeRegistry {
+class NotetypeRegistry {
   private notetypes = new Map<string, Notetype>();
 
   register(notetype: Notetype) {
@@ -20,7 +20,26 @@ export class NotetypeRegistry {
     return this.notetypes.get(id);
   }
 
+  extToNotetype(ext: string): { notetype: Notetype | undefined; isMain: boolean } {
+    let additionalType: Notetype | undefined = undefined;
+    
+    for (const notetype of this.notetypes.values()) {
+      if (notetype.info.mainExt === ext) {
+        return { notetype, isMain: true };
+      }
+      if (notetype.info.addtionalExts?.includes(ext)) {
+        additionalType = notetype;
+      }
+    }
+    
+    return { notetype: additionalType, isMain: false };
+  }
+
   createNoteClass(metadata: NoteMetadata, fsMgr: NotebookFsMgr) {
+    if (!metadata.notetype) {
+      return null;
+    }
+
     const notetype = this.get(metadata.notetype.id);
     if (!notetype) {
       throw new Error(`Notetype with id ${metadata.notetype.id} is not registered.`);
@@ -30,4 +49,5 @@ export class NotetypeRegistry {
     return note;
   }
 }
-// 明日は試しにScrap作る
+
+export const notetypeRegistry = new NotetypeRegistry();
