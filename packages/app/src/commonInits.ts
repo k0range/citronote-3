@@ -26,7 +26,7 @@ export function clearLoading() {
     loadingElem.classList.add("fadeout");
     loadingElem.addEventListener("transitionend", () => {
       loadingElem.remove();
-    });
+    }, { once: true });
   }
 
   // ロード画面のスタイル変数を削除
