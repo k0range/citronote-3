@@ -37,8 +37,16 @@ export default function AddNotebook({
   const [folderHandle, setFolderHandle] =
     useState<FileSystemDirectoryHandle | null>(null);
   
+  const fsSupported = checkFsApiSupport();
+  
   const locationOptions = [
-    { label: "このコンピューター", value: "local", disabled: !checkFsApiSupport(), info: !checkFsApiSupport() ? "このブラウザではサポートされていません。" : undefined, infoUrl: !checkFsApiSupport() ? "https://developer.mozilla.org/en-US/docs/Web/API/window/showDirectoryPicker" : undefined },
+    {
+      label: "このコンピューター",
+      value: "local",
+      disabled: !checkFsApiSupport(),
+      info: fsSupported ? "このブラウザではサポートされていません。" : undefined,
+      infoUrl: fsSupported ? "https://developer.mozilla.org/en-US/docs/Web/API/window/showDirectoryPicker" : undefined
+    },
     { label: (
       <div className="flex items-center">
         実行ファイルがある場所
