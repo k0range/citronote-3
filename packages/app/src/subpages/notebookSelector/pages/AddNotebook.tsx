@@ -224,8 +224,12 @@ export default function AddNotebook({
                 kind: "browser",
                 handle: folderHandle!,
               });
+            } else {
+              alert("未実装");
+              setButtonDisabled(false);
+              return;
             }
-            location.href = `/#/nb/${nb!.id}`;
+            location.href = `/#/nb/${nb.id}`;
           } catch (error) {
             alert("ノートブックの追加に失敗しました。");
             console.error(error);
