@@ -1,0 +1,73 @@
+<!doctype html>
+<html data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      const themeCache = JSON.parse(localStorage.getItem("themeCache")) || {
+        background1: "#ffffff",
+        color: "#2c2c2c",
+      };
+      const loadingElement = document.getElementById("loading");
+      document.documentElement.style.setProperty(
+        "--color-background-1",
+        themeCache.background1,
+      );
+      document.documentElement.style.setProperty(
+        "--color-color",
+        themeCache.color,
+      );
+    </script>
+    <title>Citronote</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #loading {
+        position: fixed;
+        z-index: 99999;
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--color-background-1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.25s ease;
+      }
+      #loading .icon {
+        display: block;
+        margin: auto;
+      }
+      #loading .icon img {
+        opacity: 0.4;
+        background-color: var(--color-color);
+        mask-image: url("./src/assets/simple_icon.svg");
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        margin: auto;
+      }
+      #loading .icon noscript {
+        font-family: "sans-serif";
+        font-size: 16px !important;
+        color: var(--color-color);
+        opacity: 0.6;
+        margin-top: 24px;
+      }
+      #loading.fadeout {
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading" style="-webkit-app-region: drag">
+      <div class="icon">
+        <img src="./src/assets/simple_icon.svg" />
+        <noscript>Please turn on Javascript</noscript>
+      </div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

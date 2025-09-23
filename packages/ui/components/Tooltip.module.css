@@ -1,0 +1,50 @@
+.TooltipContent {
+  will-change: opacity, transform;
+
+  --tooltip-bg: var(--color-background-1);
+  --tooltip-border: var(--color-border);
+
+  background: var(--tooltip-bg);
+  border: 1px solid var(--tooltip-border);
+  border-radius: 6px;
+  padding: 4px 12px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.3);
+  overflow: visible; /* 念のため */
+}
+
+/* 開くとき */
+.TooltipContent[data-state="delayed-open"],
+.TooltipContent[data-state="instant-open"] {
+  animation: fadeIn 120ms ease-in forwards;
+}
+
+/* 閉じるとき */
+.TooltipContent[data-state="closed"] {
+  animation: fadeOut 120ms ease-in forwards;
+}
+
+/* Arrow を二重にして枠線を表現 */
+.arrowFill {
+  fill: var(--tooltip-bg);
+}
+.arrowBorder {
+  fill: var(--tooltip-border);
+  transform: translateX(-1px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

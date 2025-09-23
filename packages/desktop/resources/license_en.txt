@@ -1,0 +1,12 @@
+﻿To use Citronote, you must agree to all of the following:
+
+* License: This governs the use of Citronote's source code under an open-source license.
+  https://github.com/citronote/citronote/LICENSE
+
+* Terms of Service: These outline the rules for using the Citronote and related services.
+  https://citronote.com/terms/
+
+* Privacy Policy: This explains what kind of user data Citronote collects and how it is handled.
+  https://citronote.com/privacy/
+
+Some services, such as Citronote cloud services, may be subject to additional terms and conditions.

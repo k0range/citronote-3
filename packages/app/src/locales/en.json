@@ -1,0 +1,57 @@
+{
+  "notebookSelector": {
+    "title": "Citronote",
+    "betaVersionLabel": "Beta Version",
+    "readAboutBeta": "Before using, please read <1>About Citronote 3 Beta</1>"
+  },
+  "addNotebookPage": {
+    "description": "A notebook is the top-level unit in Citronote. It manages notes, folders, and more together.",
+    "nameLabel": "Notebook Name",
+    "namePlaceholder": "Notebook Name",
+    "localOption": "This Computer",
+    "fsApiNotSupported": "Not supported in this browser.",
+    "invalidPath": "Please enter a valid path",
+    "alreadyAdded": "This folder has already been added as a notebook",
+    "folderNotFound": "The folder does not exist.",
+    "fileExists": "This is not a folder",
+    "folderExists": "The notebook will be saved to {{nbLocationDisplay}}.",
+    "betaWarning1": "Since this is a beta version for testing purposes, incompatible and destructive changes may occur. Do not store important data.",
+    "betaWarning2": "The beta version is currently not compatible with notebooks from Citronote v2. Please do not add Citronote v2 notebooks.",
+    "notImplemented": "Not implemented",
+    "addFailed": "Failed to add notebook.",
+    "path": "Path"
+  },
+  "getStartedPage": {
+    "welcome": "Welcome to Citronote!",
+    "createNotebookName": "Create a New Notebook",
+    "createNotebookDesc": "Create a new notebook"
+  },
+  "editorPane": {
+    "unsupportedFile": "This file cannot be opened in Citronote"
+  },
+  "sidebarPopover": {
+    "removeNotebook": {
+      "title": "Remove from Notebook List",
+      "description": {
+        "browser": "The contents of the notebook will remain on your computer and can be added again.",
+        "desktop": "The contents of the notebook will remain in {{location}} and can be added again."
+      },
+      "confirm": "Remove"
+    }
+  },
+  "back": "Back",
+  "addNotebook": "Add Notebook",
+  "manageNotebooks": "Manage Notebooks",
+  "newFolder": "New Folder",
+  "newNote": "New Note",
+  "folder": "Folder",
+  "moveToTrash": "Move to Trash",
+  "cancel": "Cancel",
+  "uploadFile": "Upload File",
+  "location": "Location",
+  "browse": "Browse",
+  "notebooksList": "Notebooks",
+  "aboutCitronote": "About Citronote",
+  "sendFeedback": "Send Feedback",
+  "warning": "Warning"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "builtin",
+  "exports": {
+    "./notetypes": "./src/notetypes/index.ts"
+  },
+  "dependencies": {
+    "core": "workspace:*",
+    "app": "workspace:*",
+    "ui": "workspace:*"
+  },
+  "devDependencies": {
+    "react-medium-image-zoom": "^5.3.0"
+  }
+}

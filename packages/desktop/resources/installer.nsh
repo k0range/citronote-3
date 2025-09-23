@@ -1,0 +1,5 @@
+# 解像度DPI対応
+ManifestDPIAware true
+
+# CJKインストーラーで画像が引き伸ばされる問題への対策
+!define MUI_WELCOMEFINISHPAGE_BITMAP_NOSTRETCH
