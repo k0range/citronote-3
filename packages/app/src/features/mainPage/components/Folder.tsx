@@ -1,6 +1,6 @@
 import { ChevronDownIcon, FolderIcon } from "lucide-react";
-import type { Folder as FolderType } from "core/notebooks";
 import { twMerge } from "tailwind-merge";
+import type { FolderDisplay } from "../stores/folderTree";
 
 type BaseFolderProps = {
   nest: number;
@@ -8,7 +8,7 @@ type BaseFolderProps = {
 
 type DisplayFolderProps = BaseFolderProps & {
   mode?: "display";
-  folder: FolderType;
+  folder: FolderDisplay;
   childrenExists: boolean;
   isOpen: boolean;
   onToggle: () => void;
@@ -19,6 +19,7 @@ type DisplayFolderProps = BaseFolderProps & {
 
 type InputFolderProps = BaseFolderProps & {
   mode: "input";
+  initialValue?: string;
   onSubmit: (name: string) => void;
   onCancel?: () => void;
   isActive?: boolean;
@@ -97,11 +98,12 @@ export default function Folder(props: FolderProps) {
         {props.mode === "input" && (
           <input
             type="text"
-            defaultValue={""}
+            defaultValue={props.initialValue}
             autoFocus
+            onFocus={(e) => e.currentTarget.select()}
             onClick={(e) => e.stopPropagation()}
             className="bg-transparent w-full no-focus-outline"
-            placeholder="フォルダ名"
+            placeholder={props.initialValue || "フォルダ名"}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 props.onSubmit(e.currentTarget.value);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import iconSvg from "../assets/simple_icon.svg";
+import { SimpleIcon } from "ui";
 
 export default function Titlebar({
   icon = true,
@@ -25,10 +25,7 @@ export default function Titlebar({
       style={{ WebkitAppRegion: "drag" }}
     >
       {icon && (
-        <img
-          src={iconSvg}
-          className={`h-[15px] translate-y-[3px] ${focused ? "opacity-90" : "opacity-60"}`}
-        />
+        <SimpleIcon className={`text-color h-3.75 w-3 translate-y-0.75 ${focused ? "opacity-90" : "opacity-60"}`} />
       )}
       {title && (
         <div

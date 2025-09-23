@@ -30,5 +30,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "../ui/components/Button.tsx", "../ui/components/Label.tsx", "../ui/components/MenuActionButton.tsx", "../ui/components/Popover.tsx", "../ui/components/RadioGroup.tsx", "../ui/components/SlidePages.tsx", "src/components/Titlebar.tsx", "../ui/components/Tooltip.tsx", "../ui/components/LogoType.tsx", "../ui/components/SimpleIcon.tsx", "../ui/components/ErrorBoundary.tsx", "global.d.ts"],
 }

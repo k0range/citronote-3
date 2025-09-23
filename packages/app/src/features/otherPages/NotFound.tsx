@@ -1,4 +1,4 @@
-import SimpleIcon from "@/components/SimpleIcon";
+import { SimpleIcon } from "ui";
 
 export default function NotFound() {
   return (

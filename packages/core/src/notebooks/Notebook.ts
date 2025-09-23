@@ -1,4 +1,5 @@
-import { NoteMetadata, notetypeRegistry } from "../notes";
+import { getBuiltinNotetypes } from "../builtin/notetypes/builtinNotetype";
+import { NoteEditor, type NoteMetadata, NotetypeRegistry } from "../notes";
 import type { FsEntry, NotebookFsMgr, NotebookMetadata, NotebookLocationHandle, Folder, NotebookFsMgrClass } from "./types";
 
 async function dirToFolder(dir: FsEntry, fsMgr: NotebookFsMgr): Promise<Folder> {
@@ -15,11 +16,12 @@ async function dirToFolder(dir: FsEntry, fsMgr: NotebookFsMgr): Promise<Folder> 
   })
 }
 
-async function toNoteMetadata({ name, path, excerpt, fsMgr }: {
+async function toNoteMetadata({ name, path, excerpt, fsMgr, notetypeRegistry }: {
   name: string;
   path: string;
   excerpt?: boolean;
   fsMgr?: NotebookFsMgr;
+  notetypeRegistry: NotetypeRegistry;
 }): Promise<NoteMetadata> {
   const lastDotIndex = name.lastIndexOf(".");
   const nameWithoutExt = lastDotIndex === -1 ? name : name.slice(0, lastDotIndex);
@@ -44,6 +46,10 @@ async function toNoteMetadata({ name, path, excerpt, fsMgr }: {
   return metadata
 }
 
+export interface NbInitOptions {  
+  builtinNotetypeEditors: Record<"markdown" | "plaintext" | "scrap" | "image", NoteEditor>
+}
+
 export class Notebook {
   id: string;
   name: string;
@@ -51,6 +57,7 @@ export class Notebook {
   location: "local" | "cloud";
   locationHandle: NotebookLocationHandle;
   private fsMgr: NotebookFsMgr; // このNotebookのファイル操作に使用するプロバイダ
+  notetypeRegistry: NotetypeRegistry;
 
   constructor({ metadata, fsMgr }: {
     metadata: NotebookMetadata
@@ -63,6 +70,18 @@ export class Notebook {
     this.locationHandle = metadata.locationHandle;
 
     this.fsMgr = new fsMgr(this.locationHandle);
+    
+    this.notetypeRegistry = new NotetypeRegistry();
+  }
+
+  async init(options: NbInitOptions) {
+    // 標準のノートタイプを登録 notebookにこの役目入れる
+    this.notetypeRegistry.reset();
+    
+    const builtinNotetypes = getBuiltinNotetypes(options.builtinNotetypeEditors);
+    builtinNotetypes.forEach(nt => {
+      this.notetypeRegistry.register(nt);
+    });
   }
 
   async listFolders(path: string = "/") {
@@ -81,6 +100,16 @@ export class Notebook {
     return await dirToFolder(dir!, this.fsMgr);
   }
 
+  async renameFolder(oldPath: string, newPath: string) {
+    await this.fsMgr.rename(oldPath, newPath);
+    const dir = await this.fsMgr.stat(newPath);
+    return await dirToFolder(dir!, this.fsMgr);
+  }
+
+  async deleteFolder(path: string) {
+    await this.fsMgr.delete(path, { recursive: true });
+  }
+
   async listNotes(path: string = "/", options: {
     excerpt?: boolean;
   }) {
@@ -95,6 +124,7 @@ export class Notebook {
         path: file.path,
         excerpt: options.excerpt,
         fsMgr: this.fsMgr,
+        notetypeRegistry: this.notetypeRegistry,
       });
 
       notes.push(note)
@@ -108,7 +138,7 @@ export class Notebook {
     noteName?: string,
     notetypeId: string
   }) {
-    const notetype = notetypeRegistry.get(notetypeId);
+    const notetype = this.notetypeRegistry.get(notetypeId);
     if (!notetype) {
       throw new Error(`Unknown notetype: ${notetypeId}`);
     }
@@ -140,14 +170,39 @@ export class Notebook {
       name: path.split("/").pop() || "",
       path,
       fsMgr: this.fsMgr,
+      notetypeRegistry: this.notetypeRegistry,
     });
   }
 
   async openNote(metadata: NoteMetadata) {
-    const note = notetypeRegistry.createNoteClass(metadata, this.fsMgr);
+    const note = this.notetypeRegistry.createNoteClass(metadata, this.fsMgr);
     if (note) {
       await note.init();
     }
     return note;
+  }
+
+  async deleteNote(path: string) {
+    await this.fsMgr.delete(path);
+  }
+
+  async uploadFile(path: string) {
+    const [fileHandle] = await (window as any).showOpenFilePicker({
+      multiple: false,
+    });
+    if (!fileHandle) {
+      return;
+    }
+    const file = await fileHandle.getFile();
+    const arrayBuffer = await file.arrayBuffer();
+    const uint8Array = new Uint8Array(arrayBuffer);
+    await this.fsMgr.writeFile(path + "/" + file.name, uint8Array, { recursive: true });
+
+    return await toNoteMetadata({
+      name: file.name,
+      path: path + "/" + file.name,
+      fsMgr: this.fsMgr,
+      notetypeRegistry: this.notetypeRegistry,
+    })
   }
 }

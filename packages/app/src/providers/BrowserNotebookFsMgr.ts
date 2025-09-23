@@ -19,29 +19,40 @@ function splitPath(path: string): string[] {
   return stack;
 }
 
-async function getHandleByName(dir: FileSystemDirectoryHandle, name: string): Promise<FileSystemDirectoryHandle | FileSystemFileHandle | null> {
+async function getHandleByName(dir: FileSystemDirectoryHandle, name: string, options?: {
+  create?: boolean;
+}): Promise<FileSystemDirectoryHandle | FileSystemFileHandle | null> {
   try {
-    return await dir.getFileHandle(name, { create: false });
+    return await dir.getFileHandle(name, { create: options?.create || false });
   } catch (e) {
-    if ((e as DOMException).name !== "TypeMismatchError") throw e;
+    if ((e as DOMException).name !== "NotFoundError" && (e as DOMException).name !== "TypeMismatchError") {
+      throw e;
+    };
   }
 
   try {
-    return await dir.getDirectoryHandle(name, { create: false });
+    return await dir.getDirectoryHandle(name, { create: options?.create || false });
   } catch (e) {
-    if ((e as DOMException).name !== "TypeMismatchError") throw e;
+    if ((e as DOMException).name !== "NotFoundError" && (e as DOMException).name !== "TypeMismatchError") {
+      throw e;
+    };
   }
 
   return null;
 }
 
-async function pathToHandle(rootFsHandle: FileSystemDirectoryHandle, path: string): Promise<FileSystemFileHandle | FileSystemDirectoryHandle | null> {
+async function pathToHandle(rootFsHandle: FileSystemDirectoryHandle, path: string, options?: {
+  createRecursive?: boolean;
+}): Promise<FileSystemFileHandle | FileSystemDirectoryHandle | null> {
   const parts = splitPath(path);  
+  console.log(parts)
 
   let currentHandle: FileSystemDirectoryHandle | FileSystemFileHandle = rootFsHandle;
   for (const part of parts) {
     if (currentHandle.kind === "directory") {
-      const handle = await getHandleByName(currentHandle, part)
+      const handle = await getHandleByName(currentHandle, part, {
+        create: options?.createRecursive || false
+      })
 
       if (!handle) return null;
       if (handle.kind === "file") {
@@ -57,7 +68,9 @@ async function pathToHandle(rootFsHandle: FileSystemDirectoryHandle, path: strin
   return currentHandle;
 }
 
-async function getParentHandleAndName(rootFsHandle: FileSystemDirectoryHandle, path: string): Promise<{ parentHandle: FileSystemDirectoryHandle; fileName: string }> {
+async function getParentHandleAndName(rootFsHandle: FileSystemDirectoryHandle, path: string, options?: {
+  createRecursive?: boolean;
+}): Promise<{ parentHandle: FileSystemDirectoryHandle; fileName: string }> {
   const parts = splitPath(path);
   if (parts.length === 0) {
     throw new Error("Invalid path");
@@ -65,7 +78,9 @@ async function getParentHandleAndName(rootFsHandle: FileSystemDirectoryHandle, p
 
   const fileName = parts.pop()!;
   const dirPath = parts.join("/");
-  const dirHandle = await pathToHandle(rootFsHandle, dirPath);
+  const dirHandle = await pathToHandle(rootFsHandle, dirPath, {
+    createRecursive: options?.createRecursive || false
+  });
   if (!dirHandle) {
     throw new Error(`Parent directory not found: ${dirPath}`);
   }
@@ -159,7 +174,9 @@ export class BrowserNotebookFsMgr implements NotebookFsMgr {
   }
 
   async writeFile(path: string, data: Uint8Array | string, options?: { recursive?: boolean }): Promise<void> {
-    const { parentHandle, fileName } = await getParentHandleAndName(this.fsHandle, path);
+    const { parentHandle, fileName } = await getParentHandleAndName(this.fsHandle, path, {
+      createRecursive: options?.recursive || false
+    });
 
     const fileHandle = await parentHandle.getFileHandle(fileName, { create: true });
     const writable = await fileHandle.createWritable();
@@ -178,7 +195,9 @@ export class BrowserNotebookFsMgr implements NotebookFsMgr {
   }
 
   async mkdir(path: string, options?: { recursive?: boolean }): Promise<void> {
-    const { parentHandle, fileName } = await getParentHandleAndName(this.fsHandle, path);
+    const { parentHandle, fileName } = await getParentHandleAndName(this.fsHandle, path, {
+      createRecursive: options?.recursive || false
+    });
 
     await parentHandle.getDirectoryHandle(fileName, { create: true });
   }

@@ -1,8 +1,8 @@
 import type React from "react";
 
-import { Icon } from "@/icons/types";
-import { NotebookFsMgr } from "../notebooks/types";
-import { BaseNote } from "./BaseNote";
+import type { Icon } from "@/icons/types";
+import type { NotebookFsMgr } from "../notebooks/types";
+import type { BaseNote } from "./BaseNote";
 
 export interface NoteMetadata {
   name: string;
@@ -32,7 +32,6 @@ export interface NotetypeUIInfo {
 }
 
 export interface NoteEditorContext {
-  // まだなにもない
   updateMetadata: (patch: Partial<NoteMetadata>) => void;
 }
 export interface NoteEditorProps {
@@ -42,8 +41,8 @@ export interface NoteEditorProps {
 export interface NoteEditor {
   [platform: string]: {
     component: React.ComponentType<NoteEditorProps>;
-    useContainer: boolean; // コンテナの中にcomponentを入れるか、自力でやるか
-    scrollAll: boolean; // エディタ部分全体をスクロール可能にするか（true）。エディタ部分の高さをコンテナに合わせて、エディタ内でスクロールさせるか（false）
+    // useContainer: boolean; // コンテナの中にcomponentを入れるか、自力でやるか
+    // scrollAll: boolean; // エディタ部分全体をスクロール可能にするか（true）。エディタ部分の高さをコンテナに合わせて、エディタ内でスクロールさせるか（false）
   };
 }
 

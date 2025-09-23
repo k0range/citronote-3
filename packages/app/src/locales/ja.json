@@ -1,0 +1,58 @@
+{
+  "notebookSelector": {
+    "title": "Citronote",
+    "betaVersionLabel": "ベータテスト版",
+    "readAboutBeta": "使用前に、<1>Citronote 3 ベータテスト版について</1>をお読み下さい"
+  },
+  "addNotebookPage": {
+    "description": "ノートブックは Citronote の最上位の単位です。ノート、フォルダ、などをまとめて管理します。",
+    "nameLabel": "ノートブック名",
+    "namePlaceholder": "ノートブック名",
+    "localOption": "このコンピューター",
+    "fsApiNotSupported": "このブラウザではサポートされていません。",
+    "invalidPath": "正しいパスを入力してください",
+    "alreadyAdded": "既にこのフォルダをノートブックとして追加しています",
+    "folderNotFound": "フォルダが存在しません。",
+    "fileExists": "フォルダではありません",
+    "folderExists": "ノートブックは {{nbLocationDisplay}} に保存されます。",
+    "betaWarning1": "試験目的のベータ版のため、互換性のない破壊的な変更が行われる可能性があります。重要なデータは保存しないで下さい。",
+    "betaWarning2": "ベータ版は現在Citronote v2のノートブックとの互換性を持っていません。Citronote v2のノートブックは追加しないで下さい。",
+    "notImplemented": "未実装",
+    "addFailed": "ノートブックの追加に失敗しました。",
+    "path": "パス"
+  },
+  "getStartedPage": {
+    "welcome": "Citronote へようこそ！",
+    "createNotebookName": "新しいノートブックを作成",
+    "createNotebookDesc": "新しいノートブックを作成します"
+  },
+  "editorPane": {
+    "unsupportedFile": "Citronote で開けないファイルです"
+  },
+  "sidebarPopover": {
+    "removeNotebook": {
+      "title": "ノートブック一覧から削除",
+      "description": {
+        "browser": "ノートブックの中身は引き続きコンピューターに残り、再度追加することができます。",
+        "desktop": "ノートブックの中身は引き続き {{location}} に残り、再度追加することができます。"
+      },
+      "confirm": "削除する"
+    }
+  },
+  "back": "戻る",
+  "addNotebook": "ノートブックを追加",
+  "manageNotebooks": "ノートブックを管理",
+  "newFolder": "新しいフォルダ",
+  "newNote": "新しいノート",
+  "folder": "フォルダ",
+  "deleteNote": "ノートを削除",
+  "deleteNoteConfirm": "ノートを削除しますか？この操作は元に戻せません。",
+  "cancel": "キャンセル",
+  "uploadFile": "ファイルをアップロード",
+  "location": "場所",
+  "browse": "参照",
+  "notebooksList": "ノートブック一覧",
+  "aboutCitronote": "Citronote について",
+  "sendFeedback": "フィードバックを送る",
+  "warning": "警告"
+}

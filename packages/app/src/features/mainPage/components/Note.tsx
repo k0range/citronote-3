@@ -1,5 +1,5 @@
 import type { NoteMetadata } from "core/notes";
-import Icon from "@/components/Icon";
+import { Icon } from "ui";
 import { FileQuestionIcon } from "lucide-react";
 
 export default function NoteComponent({
@@ -28,8 +28,8 @@ export default function NoteComponent({
             <FileQuestionIcon className="mr-2 h-4.5 w-4.5 mt-0.5 opacity-50" />
           ) }
           <div>
-            <div className="flex items-center">
-              <span>{note.name}</span>
+            <div>
+              <span className="break-all">{note.name}</span>
               {note.extLabel ? (
                 <span className="text-[0.67rem] bg-border rounded-sm opacity-80 tracking-wide px-1 ml-1.5">
                   {note.extLabel}

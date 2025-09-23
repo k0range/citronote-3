@@ -1,5 +1,5 @@
-import { Notebook } from "./Notebook";
-import { NotebookFsMgrClass, NotebookMetadata, NotebooksStorage } from "./types";
+import { NbInitOptions, Notebook } from "./Notebook";
+import type { NotebookFsMgrClass, NotebookMetadata, NotebooksStorage } from "./types";
 
 export class NotebooksManager {
   private storage: NotebooksStorage;
@@ -13,7 +13,7 @@ export class NotebooksManager {
     this.localFsMgr = localFsMgr;
   }
 
-  async getNotebook(id: string) {
+  async getNotebook(id: string, nbInitOptions: NbInitOptions) {
     const metadata = await this.storage.getNotebook(id)
 
     if (!metadata) return null;
@@ -29,6 +29,7 @@ export class NotebooksManager {
       metadata,
       fsMgr: fsMgr!,
     });
+    await notebook.init(nbInitOptions)
 
     return notebook;
   }

@@ -1,9 +1,14 @@
-import { NotebookFsMgr } from "../notebooks/types";
-import { NoteMetadata, Notetype, NotetypeInfo } from "./types";
+import type { NotebookFsMgr } from "../notebooks/types";
+import type { NoteMetadata, NotetypeInfo } from "./types";
+import type { Notetype } from "./types";
 
-class NotetypeRegistry {
+export class NotetypeRegistry {
   private notetypes = new Map<string, Notetype>();
 
+  reset() {
+    this.notetypes.clear();
+  }
+ 
   register(notetype: Notetype) {
     if (this.notetypes.has(notetype.info.id)) {
       throw new Error(`Notetype with id ${notetype.info.id} is already registered.`);
@@ -50,4 +55,4 @@ class NotetypeRegistry {
   }
 }
 
-export const notetypeRegistry = new NotetypeRegistry();
+//export const notetypeRegistry = new NotetypeRegistry(); // notebookごとにinstance持つ？

@@ -5,6 +5,8 @@ export abstract class BaseNote {
   metadata: NoteMetadata;
   protected fsMgr!: NotebookFsMgr;
 
+  abstract readonly __notetype: string;
+  
   constructor(metadata: NoteMetadata, fsMgr: NotebookFsMgr) {
     this.metadata = metadata;
     this.fsMgr = fsMgr;

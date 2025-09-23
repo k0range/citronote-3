@@ -1,21 +1,21 @@
 import { useState } from "react";
 import {
-  PlusIcon,
-  ScrollIcon,
   NotebookIcon,
 } from "lucide-react";
 import useActiveNotebookStore from "../stores/activeNotebook";
 
 import Header from "../components/Header";
 import Tab from "../components/Tab";
-import Popover from "@/components/Popover";
+import { Popover, Wip } from "ui";
 
 import Folders from "./tabs/Folders";
-import MenuActionButton from "@/components/MenuActionButton";
 import { twMerge } from "tailwind-merge";
 import type { Icon } from "core/icons";
+import SidebarPopoverContent from "./SidebarPopoverContent";
 
 export default function Sidebar() {
+  console.log("Render Sidebar");
+
   const notebook = useActiveNotebookStore((state) => state.notebook);
 
   if (!notebook) {
@@ -41,7 +41,7 @@ export default function Sidebar() {
         type: "lucide",
         name: "Search"
       },
-      component: <div>search</div>
+      component: <Wip />
     },
     {
       name: "tags",
@@ -49,7 +49,7 @@ export default function Sidebar() {
         type: "lucide",
         name: "Tag"
       },
-      component: <div>tags</div>
+      component: <Wip />
     }
   ] 
 
@@ -59,16 +59,8 @@ export default function Sidebar() {
     <>
       <div className="w-[17rem] min-w-[17rem] h-full bg-background-2 border-r border-r-border flex flex-col">
         <Header>
-          <Popover content={
-            <div className="flex flex-col">
-              <MenuActionButton
-                icon={PlusIcon}
-                label="ノートブックを追加"
-                onClick={() => {}}
-              />
-            </div>
-          }>
-            <button className="flex items-center w-full hover:bg-hover duration-150 rounded-lg py-1 outline-x cursor-pointer">
+          <Popover content={<SidebarPopoverContent />}>
+            <button className="flex items-center w-full hover:bg-hover duration-150 rounded-lg py-1.5 outline-x cursor-pointer">
               { notebook.iconUrl ? (
                 <img
                   src={notebook.iconUrl}
@@ -99,7 +91,7 @@ export default function Sidebar() {
                 selected={tab === t.name}
               ></Tab>
             ))}
-            <Popover
+            {/*<Popover
               content={
                 <div className="flex flex-col">
                   <button
@@ -120,7 +112,7 @@ export default function Sidebar() {
                 }}
                 selected={tab === "more"}
               ></Tab>
-            </Popover>
+            </Popover>*/}
           </div>
 
           <div className="overflow-y-auto pb-8">

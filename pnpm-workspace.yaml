@@ -4,3 +4,7 @@ packages:
 ignoredBuiltDependencies:
   - '@swc/core'
   - esbuild
+
+onlyBuiltDependencies:
+  - electron
+  - electron-winstaller

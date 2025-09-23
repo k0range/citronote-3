@@ -1,5 +1,5 @@
-import Button from "@/components/Button";
-import type { Icon } from "core/icons";
+import { Button, Icon } from "ui";
+import type { Icon as IconType } from "core/icons";
 
 export default function Tab({
   ref,
@@ -11,7 +11,7 @@ export default function Tab({
   ref?: React.Ref<HTMLButtonElement>;
   onClick?: () => void;
   selected?: boolean;
-  icon?: Icon;
+  icon?: IconType;
   className?: string;
 }) {
   return (
@@ -20,7 +20,8 @@ export default function Tab({
       onClick={onClick}
       className={`${!selected ? "bg-transparent border border-border" : "border border-border"} w-full ${className || ""}`}
       variant="secondary"
-      icon={icon}
-    ></Button>
+    >
+      {icon && <Icon icon={icon} className="inline w-4.5" />}
+    </Button>
   );
 }

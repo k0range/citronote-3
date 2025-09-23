@@ -1,15 +1,14 @@
-import type { Folder } from "core/notebooks";
 import { create } from "zustand";
 
 type CurrentFolderStore = {
-  folder: Folder | null;
-  setFolder: (folder: Folder | null) => void;
+  folderPath: string | null;
+  setFolderPath: (folder: string | null) => void;
 };
 
 const useCurrentFolderStore = create<CurrentFolderStore>((set) => ({
-  folder: null,
-  setFolder(folder) {
-    set({ folder });
+  folderPath: null,
+  setFolderPath(folderPath) {
+    set({ folderPath });
   },
 }));
 

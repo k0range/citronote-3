@@ -3,7 +3,8 @@ import { appEnv } from "@/env";
 import { useNotebooksManager } from "@/hooks/useNotebooksManager";
 import type { NotebookMetadata } from "core/notebooks";
 import Notebook from "../components/Notebook";
-import Button from "@/components/Button";
+import { Button } from "ui";
+import { t } from "i18next";
 
 export default function Notebooks({ changePage }: { changePage: (page: string, direction: number) => void }) {
   const notebooksMgr = useNotebooksManager();
@@ -22,10 +23,10 @@ export default function Notebooks({ changePage }: { changePage: (page: string, d
   return (
     <>
       <div className="flex items-center justify-between pb-2.5">
-        <h2 className="text-xl">ノートブック一覧</h2>
+        <h2 className="text-xl">{t("notebooksList")}</h2>
         <div>
-          <Button onClick={() => changePage("addNotebook", 1)}>
-            ノートブックを追加
+          <Button onClick={() => changePage("newNotebook", 1)}>
+            {t("addNotebook")}
           </Button>
         </div>
       </div>

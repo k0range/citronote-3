@@ -13,7 +13,4 @@ interface ImgIcon {
   url: string; // 画像URL
 }
 
-// 登録が必要なicon
-export type RegisteredIcon = SvgIcon | ImgIcon;
-
-export type Icon = LucideIcon | RegisteredIcon;
+export type Icon = LucideIcon | SvgIcon | ImgIcon;

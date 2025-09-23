@@ -1,9 +1,6 @@
 import {
   ComputerIcon,
-  CloudIcon,
-  AppWindowIcon,
   NotebookIcon,
-  ChevronRightIcon,
 } from "lucide-react";
 import type { NotebookMetadata } from "core/notebooks";
 
@@ -22,17 +19,17 @@ export default function Notebook({
       <div className="w-1 bg-border duration-200"></div>
       <div className="py-2.5">
         <div className="flex items-center">
-          {nb.icon ? (
-            <img src={nb.icon} className="ml-3 mr-2 h-6 rounded-sm" />
+          {nb.iconUrl ? (
+            <img src={nb.iconUrl} className="ml-3 mr-2 h-6 rounded-sm" />
           ) : (
             <NotebookIcon className="ml-3 mr-2 h-4.5 w-4.5" />
           )}
           <div className="mb-0.5">{nb.name}</div>
         </div>
-        <div className="ml-11 text-xs opacity-80 flex items-center">
+        <div className="ml-11 text-xs opacity-80 text-left ">
           {nb.locationHandle.kind === "electron" && (
             <>
-              <ComputerIcon className="inline h-3.5 w-3.5 mr-1.5" />
+              <ComputerIcon className="inline h-3.5 w-3.5 mr-1.5 mb-0.5" />
               {"path" in nb.locationHandle && nb.locationHandle.path && (
                 <>{nb.locationHandle.path}</>
               )}
@@ -40,7 +37,7 @@ export default function Notebook({
           )}
           {nb.locationHandle.kind === "browser" && (
             <>
-              <AppWindowIcon className="inline h-3.5 w-3.5 mr-1.5" />
+              <ComputerIcon className="inline h-3.5 w-3.5 mr-1.5 mb-0.5" />
               {nb.locationHandle.handle?.name}
             </>
           )}

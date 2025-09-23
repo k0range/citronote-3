@@ -20,6 +20,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "src"),
+        "react": path.resolve('./node_modules/react'),
+        "react-dom": path.resolve('./node_modules/react-dom')
       },
     },
     build: {
@@ -27,7 +29,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       rollupOptions: {
         input: {
           main: path.resolve(__dirname, "index.html"),
-          notebookSelector: path.resolve(__dirname, "index.html"),
+          notebookSelector: path.resolve(__dirname, "notebook_selector.html"),
         }
       }
     },

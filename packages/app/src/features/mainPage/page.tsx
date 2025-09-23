@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -13,32 +13,60 @@ import useActiveNotebookStore from "./stores/activeNotebook";
 import { useNotebooksManager } from "@/hooks/useNotebooksManager";
 import EditorPane from "./panes/EditorPane";
 
-import { DndContext, DragOverlay } from "@dnd-kit/core";
+import { initNotebook } from "./initNotebook";
+import OriginalMdEditor from "@/editors/OriginalMdEditor";
+import ImageEditor from "@/editors/ImageEditor";
+import ScrapEditor from "@/editors/ScrapEditor";
+import PlaintextEditor from "@/editors/PlaintextEditor";
 
 export default function MainPage() {
   const notebooksMgr = useNotebooksManager();
 
   const notebook = useActiveNotebookStore((state) => state.notebook);
-  const setNotebook = useActiveNotebookStore((state) => state.setNotebook);
 
   const navigate = useNavigate();
 
   const { notebookId } = useParams();
 
-  const [drag, setDrag] = useState<string | null>(null);
-
+  // ここにnotebook関連のinitCoreとかも入れる
   useEffect(() => {
     (async () => {
       if (notebookId) {
-        const nb = await notebooksMgr.getNotebook(notebookId);
-        setNotebook(nb);
+        const nb = await notebooksMgr.getNotebook(notebookId, {
+          builtinNotetypeEditors: {
+            markdown: {
+              app: {
+                component: OriginalMdEditor
+              }
+            },
+            plaintext: {
+              app: {
+                component: PlaintextEditor
+              }
+            },
+            scrap: {
+              app: {
+                component: ScrapEditor
+              }
+            },
+            image: {
+              app: {
+                component: ImageEditor
+              }
+            },
+          }
+        });
+        if (nb) {
+          await initNotebook({ notebook: nb });
+        }
       } else {
         if (appEnv.platform === "browser") {
           navigate("/select-notebook");
         }
       }
     })();
-  }, [notebookId, notebooksMgr, setNotebook, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [notebookId]);
 
   if (!notebook) {
     return (
@@ -47,40 +75,13 @@ export default function MainPage() {
   }
   
   return (
-    <DndContext
-      onDragStart={(event) => {
-        setDrag(event.active.id as string);
-      }}
-      onDragEnd={() => {
-        setDrag(null);
-      }}
-      onDragCancel={() => {
-        setDrag(null);
-      }}
-    >
-      <div className="h-screen flex flex-col text-color">
-        {appEnv.platform === "electron" && <Titlebar title={notebook.name} />}
-        <div className="flex flex-grow min-h-0 max-h-full">
-          <Sidebar />
-          <NotesPane />
-          <EditorPane />
-        </div>
+    <div className="h-screen flex flex-col text-color">
+      {appEnv.platform === "electron" && <Titlebar title={notebook.name} />}
+      <div className="flex flex-grow min-h-0 max-h-full">
+        <Sidebar />
+        <NotesPane />
+        <EditorPane />
       </div>
-      {/* ドラッグ関連は実装中 */}
-      <DragOverlay>
-        {drag ? (
-          <div
-            style={{
-              padding: "4px 8px",
-              background: "black",
-              color: "white",
-              borderRadius: 4,
-            }}
-          >
-            📂 {drag}
-          </div>
-        ) : null}
-      </DragOverlay>
-    </DndContext>
+    </div>
   );
 }

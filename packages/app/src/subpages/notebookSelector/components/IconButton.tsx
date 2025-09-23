@@ -1,4 +1,4 @@
-import Tooltip from "@/components/Tooltip";
+import { Tooltip } from "ui";
 
 export default function IconButton({
   icon: Icon,

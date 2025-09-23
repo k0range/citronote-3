@@ -19,41 +19,6 @@
         themeCache.color,
       );
     </script>
-    <script type="module">
-      function getPageName() {
-        // 例: "/", "/index.html", "/about.html", "/foo/bar.html"
-        let path = window.location.pathname;
-
-        // base がある場合を考慮 (例: /app/about.html → about.html)
-        const parts = path.split("/");
-        const last = parts[parts.length - 1] || "index.html";
-
-        return last.toLowerCase();
-      }
-
-      async function loadEntry() {
-        const page = getPageName();
-
-        switch (page) {
-          case "":
-          case "index.html":
-            if (!window.location.hash) {
-              window.location.href = "/notebook_selector.html";
-              return;
-            }
-            await import("/src/main.tsx");
-            break;
-          case "notebook_selector.html":
-            await import("/src/subpages/notebookSelector/main.tsx");
-            break;
-          default:
-            console.warn(`No entry defined for: ${page}, fallback to main.`);
-            await import("/src/main.tsx");
-        }
-      }
-
-      loadEntry();
-    </script>
     <title>Citronote</title>
     <style>
       body {
@@ -64,9 +29,7 @@
         z-index: 99999;
         width: 100vw;
         height: 100vh;
-        background-color: var(
-          --color-background-1
-        ); /* あとでテーマ対応(localStorage) */
+        background-color: var(--color-background-1);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -101,9 +64,10 @@
     <div id="loading" style="-webkit-app-region: drag">
       <div class="icon">
         <img src="./src/assets/simple_icon.svg" />
-        <noscript>Please turn on JavaScript</noscript>
+        <noscript>Please turn on Javascript</noscript>
       </div>
     </div>
     <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

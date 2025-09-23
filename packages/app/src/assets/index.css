@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @source "../../../builtin";
+@source "../../../ui";
+
+@plugin "@tailwindcss/container-queries";
 
 #root {
   height: 100vh;
@@ -85,12 +88,12 @@ img {
 }
 
 [data-theme='light'] {
-  --theme-color: #2c2c2c;
-  --theme-background-0: #f8f8f8;
+  --theme-color: #434343;
+  --theme-background-0: #ffffff;
   --theme-background-1: #ffffff;
-  --theme-background-2: #f0f0f0;
-  --theme-selected: #e5e5e5;
-  --theme-hover: #dcdcdc;
+  --theme-background-2: #ffffff;
+  --theme-selected: #f0f0f0;
+  --theme-hover: #f8f8f8;
   --theme-border: #dcdcdc;
   --theme-primary: #3b82f6;
   --theme-secondary: #e5e5e5;

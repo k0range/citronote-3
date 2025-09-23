@@ -3,6 +3,8 @@ import { NotebooksManager, type NotebookFsMgrClass, type NotebooksStorage } from
 import { BrowserNotebooksStorage } from "@/providers/BrowserNotebooksStorage";
 import { useRef } from "react";
 import { BrowserNotebookFsMgr } from "@/providers/BrowserNotebookFsMgr";
+import { ElectronNotebooksStorage } from "@/providers/ElectronNotebooksStorage";
+import { ElectronNotebookFsMgr } from "@/providers/ElectronNotebookFsMgr";
 
 export function useNotebooksManager() {
   const notebooksManager = useRef<NotebooksManager | null>(null);
@@ -14,6 +16,9 @@ export function useNotebooksManager() {
     if (appEnv.platform === "browser") {
       notebooksStorage = new BrowserNotebooksStorage();
       localFsMgr = BrowserNotebookFsMgr;
+    } else if (appEnv.platform === "electron") {
+      notebooksStorage = new ElectronNotebooksStorage();
+      localFsMgr = ElectronNotebookFsMgr;
     } else {
       throw new Error("NotebooksStorage is not implemented for this platform: " + appEnv.platform);
     }
