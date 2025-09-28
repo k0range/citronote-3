@@ -1,4 +1,4 @@
-import { type Scrap } from "builtin/notetypes";
+import { type Scrap } from "core/builtin/notetypes";
 
 const dateFormatter = new Intl.DateTimeFormat("ja-JP", {
   year: "numeric",
@@ -21,10 +21,10 @@ export default function ScrapsList({
           key={index}
           className="px-3.5 py-2 rounded-lg w-full bg-background-2 border border-border text-color mb-2"
         >
-          <div className="flex text-xs opacity-50 mb-0.25">
+          <div className="flex text-xs opacity-50 mb-0.25 select-text">
             {scrap.date ? dateFormatter.format(new Date(scrap.date)) : ""}
           </div>
-          <div>{scrap.content}</div>
+          <div className="select-text">{scrap.content}</div>
         </div>
       ))}
     </div>

@@ -4,7 +4,7 @@ import { Icon, ErrorBoundary, Tooltip, Popover, MenuActionButton, showAlertDialo
 
 import Header from "../components/Header";
 import useCurrentNoteStore from "../stores/currentNote";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNotesListStore } from "../stores/notesList";
 import HeaderIconButton from "../components/HeaderIconButton";
 import { t } from "i18next";
@@ -18,6 +18,8 @@ export default function EditorPane() {
   const noteMetadata = useCurrentNoteStore((state) => state.noteMetadata);
   const note = useCurrentNoteStore((state) => state.note);
   const noteListStore = useNotesListStore((state) => state);
+
+  const [inputingName, setInputingName] = useState(noteMetadata?.name || "");
 
   const [editorCompFor, setEditorCompFor] = useState<string | null>(null);
 
@@ -34,6 +36,29 @@ export default function EditorPane() {
     return null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [note?.metadata, note?.metadata?.notetype, notebook]);
+
+  useEffect(() => {
+    setInputingName(noteMetadata?.name || "");
+  }, [noteMetadata]);
+
+  const changeNoteName = async () => {
+    if (!notebook || !noteMetadata) {
+      return;
+    }
+    try {
+      const newMetadata = await notebook.renameNote(noteMetadata, inputingName);
+
+      useCurrentNoteStore.getState().set({
+        noteMetadata: newMetadata,
+        note: await notebook.openNote(newMetadata)
+      });
+
+      noteListStore.updateNote(noteMetadata.path, { name: newMetadata.name, path: newMetadata.path });
+    } catch (e: unknown) {
+      console.error(e);
+      setInputingName(noteMetadata.name);
+    }
+  }
 
   return (
     <div className="flex-grow bg-background-0 flex flex-col min-w-0 @container" ref={paneRef}>
@@ -96,7 +121,19 @@ export default function EditorPane() {
                   className="@[1000px]:absolute @[1000px]:-translate-x-8 mr-3 h-5 w-5 mt-1.75"
                   style={{ color: noteMetadata?.notetype?.ui.color || "#999" }}
                 />
-                <h1 className="text-2xl mb-2">{noteMetadata?.name}</h1>
+                <input
+                  className="text-2xl mb-2 cursor-text w-full"
+                  value={inputingName}
+                  onChange={(e) => {
+                    setInputingName(e.target.value);
+                  }}
+                  onBlur={changeNoteName}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      (e.target as HTMLInputElement).blur();
+                    }
+                  }}
+                />
               </div>
             ) }
           </div>

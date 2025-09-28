@@ -12,10 +12,12 @@ import {
   prosemarkBasicSetup,
   prosemarkBaseThemeSetup,
   prosemarkMarkdownSyntaxExtensions,
-} from '@prosemark/core';
+} from '@korange/prosemark-ctrn3-tempfork-core';
 
 import { markdown } from '@codemirror/lang-markdown';
 import { GFM } from '@lezer/markdown';
+import useActiveNotebookStore from "@/features/mainPage/stores/activeNotebook";
+import { PathUtil } from "shared/utils";
 
 // 仮置き、いずれutilsなどに収納
 const debounce = <T extends (...args: any[]) => unknown>( // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -37,6 +39,8 @@ export default function MarkdownEditor({ note, ctx }: NoteEditorProps) {
   if (!isMarkdown(note)) {
     throw new Error("Invalid note type for MarkdownEditor");
   }
+
+  const notebook = useActiveNotebookStore(state => state.notebook);
 
   const theme = EditorView.theme({
     "&": {
@@ -93,7 +97,22 @@ export default function MarkdownEditor({ note, ctx }: NoteEditorProps) {
       ]
     }),
     // Basic prosemark extensions
-    prosemarkBasicSetup(),
+    prosemarkBasicSetup({
+      imgSrcReplacer: async (src) => {
+        console.log(note.metadata.path, "..", src)
+        const file = await notebook?.fsMgr.readFile(
+          PathUtil.join(note.metadata.path, "..", src)
+        ).catch(() => null);
+        if (file) {
+          const blob = new Blob([file.buffer as ArrayBuffer], { type: "image*" });
+          console.log("return blob", blob);
+          return URL.createObjectURL(blob);
+        } else {
+          console.log("return src", src);
+          return src;
+        }
+      }
+    }),
     // Theme extensions
     prosemarkBaseThemeSetup(),
     placeholder("Start writing..."),
@@ -123,6 +142,14 @@ export default function MarkdownEditor({ note, ctx }: NoteEditorProps) {
 
   return (
     <>
+      { /* <div className="bg-danger/12 px-3 py-1 rounded-lg col-[2] text-sm opacity-95">
+        Markdown editor may currently be unstable. If you encounter any issues, please report them on <a
+          href="https://forms.gle/xUM4zdRs4pq5ofZG8"
+          className="underline"
+          target="_blank"
+          rel="noreferrer"
+        >Feedback Form</a>.
+      </div> */}
       <CodeMirror
         basicSetup={false}
         value={content}

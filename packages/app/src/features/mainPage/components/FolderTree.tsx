@@ -8,6 +8,7 @@ import useActiveNotebookStore from "../stores/activeNotebook";
 import useFolderCreationStore from "../stores/folderCreation";
 import useFolderTreeStore from "../stores/folderTree";
 import type { FolderDisplay } from "../stores/folderTree";
+import { t } from "i18next";
 
 // FOLDER SAKUJO WARN trash
 
@@ -83,7 +84,7 @@ export default function FolderTree({ isRoot, folder, nest = 0 }: {
         <ContextMenu items={[
           {
             key: "new-folder",
-            label: "新しいフォルダ",
+            label: t("newFolder"),
             icon: { type: "lucide", name: "Plus" },
             onSelect: () => {
               setTimeout(() => {
@@ -93,7 +94,7 @@ export default function FolderTree({ isRoot, folder, nest = 0 }: {
           },
           {
             key: "rename-folder",
-            label: "名前を変更",
+            label: t("rename"),
             disabled: isRoot,
             icon: { type: "lucide", name: "Edit3" },
             onSelect: () => {
@@ -104,7 +105,7 @@ export default function FolderTree({ isRoot, folder, nest = 0 }: {
           },
           {
             key: "delete-folder",
-            label: "削除",
+            label: t("delete"),
             disabled: isRoot,
             icon: { type: "lucide", name: "Trash2" },
             onSelect: () => {

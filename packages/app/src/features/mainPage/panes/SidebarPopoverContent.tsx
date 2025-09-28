@@ -6,6 +6,7 @@ import {
   BookCopyIcon,
   NotebookIcon,
   PlusIcon,
+  SettingsIcon,
   XIcon,
 } from "lucide-react";
 import { appEnv } from "@/env";
@@ -90,19 +91,25 @@ export default function SidebarPopoverContent() {
           }}
         />
       </Popover.Close>
-      {/*<Popover.Close asChild>
+      <Popover.Close asChild>
         <MenuActionButton
           icon={SettingsIcon}
-          label="ノートブック設定"
+          label="Notebook Settings"
           onClick={() => {
-            if (appEnv.platform === "browser") {
-              navigate("/menu");
-            } else if (appEnv.platform === "electron") {
-              window.api.openNotebookSelector();
-            }
+            showAlertDialog({
+              icon: {
+                type: "lucide",
+                name: "Settings",
+              },
+              text: "Notebook Settings",
+              description: "This feature is not yet released.",
+              buttons: [
+                { text: "OK", value: "ok", variant: "primary" }
+              ]
+            })
           }}
         />
-      </Popover.Close>*/}
+      </Popover.Close>
       <hr className="border-border my-1.5" />
       {notebooks
         .filter((nb) => nb.id !== notebook.id)

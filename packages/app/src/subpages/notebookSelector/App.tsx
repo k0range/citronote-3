@@ -17,7 +17,7 @@ import Notebooks from "./pages/Notebooks";
 import GetStarted from "./pages/GetStarted";
 import { useNotebooksManager } from "@/hooks/useNotebooksManager";
 import { t } from "i18next";
-import { Trans } from "react-i18next";
+// import { Trans } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 
 export default function NotebookSelector() {  
@@ -63,27 +63,26 @@ export default function NotebookSelector() {
             <div className="text-xs mt-3 opacity-50"><span className="text-primary font-bold">{t("notebookSelector.betaVersionLabel")}</span> / Version {packageJsn.version}</div>
           </div>
           <div>
-            <div className="opacity-95 text-sm hiddena">
+            { /* <div className="opacity-95 text-sm hiddena">
               <Trans i18nKey="notebookSelector.readAboutBeta">
                 使用前に、
                 <a href="" className="text-primary">Citronote 3 ベータテスト版について</a>
                 をお読みください
               </Trans>
-            </div>
+            </div> */ }
             <div className="text-xs mt-3 flex gap-2.5 select-all">
               <IconButton
                 icon={HelpCircle}
                 tooltip={t("aboutCitronote")}
                 onClick={() => {
-                  // new tab
-                  window.open("https://citronote.com/", "_blank");
+                  window.open("https://som.citronote.korange.work/", "_blank");
                 }}
               />
               <IconButton
                 icon={MailboxIcon}
                 tooltip={t("sendFeedback")}
                 onClick={() => {
-                  window.open("https://feedback.com/", "_blank");
+                  window.open("https://forms.gle/xUM4zdRs4pq5ofZG8", "_blank");
                 }}
               />
             </div>

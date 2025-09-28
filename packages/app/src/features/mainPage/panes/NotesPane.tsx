@@ -6,7 +6,7 @@ import NoteComp from "../components/Note";
 import useCurrentFolderStore from "../stores/currentFolder";
 import useActiveNotebookStore from "../stores/activeNotebook";
 
-import { Icon, Popover, Tooltip } from "ui";
+import { Icon, Popover, showAlertDialog, Tooltip } from "ui";
 
 import useCurrentNoteStore from "../stores/currentNote";
 import { useNotesListStore } from "../stores/notesList";
@@ -100,6 +100,46 @@ export default function NotesPane() {
                       }}
                     />
                   ))}
+                  { /* For SOM */ }
+                  <NotetypeItem
+                    icon={{ type: "lucide", name: "SquareCheckBig" }}
+                    color="#5eb3dc"
+                    displayName="Tasks"
+                    key="tasks"
+                    onClick={async () => {
+                      showAlertDialog({
+                        icon: {
+                          type: "lucide",
+                          name: "SquareCheckBig",
+                        },
+                        text: "Tasks",
+                        description: "This feature is not yet released.",
+                        buttons: [
+                          { text: "OK", value: "ok", variant: "primary" }
+                        ]
+                      })
+                    }}
+                  />
+                  <NotetypeItem
+                    icon={{ type: "lucide", name: "LayoutDashboard" }}
+                    color="#65e8b1"
+                    displayName="Canvas"
+                    key="canvas"
+                    onClick={async () => {
+                      showAlertDialog({
+                        icon: {
+                          type: "lucide",
+                          name: "LayoutDashboard",
+                        },
+                        text: "Canvas",
+                        description: "This feature is not yet released.",
+                        buttons: [
+                          { text: "OK", value: "ok", variant: "primary" }
+                        ]
+                      })
+                    }}
+                  />
+                  { /* End For SOM */ }
                   <NotetypeItem
                     icon={{ type: "lucide", name: "Upload" }}
                     displayName={t("uploadFile")}

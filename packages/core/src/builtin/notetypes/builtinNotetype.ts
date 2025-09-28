@@ -1,4 +1,4 @@
-import { type Notetype, BaseNote, NoteEditor, NoteEditorProps, TextNote } from "core/notes";
+import { type Notetype, BaseNote, NoteEditor, TextNote } from "core/notes";
 
 export class MarkdownNoteClass extends TextNote {
   readonly __notetype = "markdown";
@@ -107,7 +107,29 @@ export function getBuiltinNotetypes(editors: Record<
       },
       noteClass: ImageNoteClass,
       editor: editors.image
-    }
+    },
+    //{
+    //  info: {
+    //    id: "tasks",
+    //    mainExt: "tasks",
+    //    ui: {
+    //      icon: { type: "lucide", name: "CheckSquare" },
+    //      displayName: "Tasks",
+    //      color: "#42bff4",
+    //    }
+    //  }
+    //},
+    //{
+    //  info: {
+    //    id: "canvas",
+    //    mainExt: "canvas",
+    //    ui: {
+    //      icon: { type: "lucide", name: "LayoutDashboard" },
+    //      displayName: "Canvas",
+    //      color: "#42f4a2",
+    //    }
+    //  }
+    //}
   ]
 
   return builtinNotetypes;

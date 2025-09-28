@@ -45,7 +45,8 @@
   "newFolder": "New Folder",
   "newNote": "New Note",
   "folder": "Folder",
-  "moveToTrash": "Move to Trash",
+  "deleteNote": "Delete Note",
+  "deleteNoteConfirm": "Do you want to delete the note? This action cannot be undone.",
   "cancel": "Cancel",
   "uploadFile": "Upload File",
   "location": "Location",
@@ -53,5 +54,7 @@
   "notebooksList": "Notebooks",
   "aboutCitronote": "About Citronote",
   "sendFeedback": "Send Feedback",
-  "warning": "Warning"
+  "warning": "Warning",
+  "delete": "Delete",
+  "rename": "Rename"
 }

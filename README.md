@@ -1,5 +1,3 @@
-# Ctrn/ote 3
-
 <div align="center">
 <h1>
   <a href="https://citronote.korange.work/"><picture>
@@ -9,30 +7,28 @@
   </picture></a>
 </h1>
 
-**Citronote is a powerful note-taking app with a, a, a 📝✨️**
+**Citronote 3 Beta**
 
-[Learn more →](https://citronote.korange.work/)
+[👉️ Watch the Site!]()
 
 </div>
 
 ## 🚧 Beta warning
-このアプリは現在Beta版です。以降も
+このアプリは現在Beta版です。
 現在の安定版「Citronote v2」を使用下さい。
 
 ## ✨️ Features
 
--
+- **Notetypes:** 
 
 ## 🗃️ Monorepo
 
-このリポジトリは pnpm workspaces でのモノリポを採用しています。以下がそれぞれのパッケージと説明です。
+This repository uses a monorepo with pnpm workspaces. Below are the packages and their descriptions.
 
 - **packages/core**  
   抽象化されたクラスやManager、Zustandの状態管理などCitronoteのコアロジックが入っています。これは、 packages/app と packages/mobile でのロジックを共通化するためのものです。
 - **packages/app**
   Reactで構築された、Citronoteのブラウザ・デスクトップ版で使われているフロントエンドです。これは単体でウェブアプリとしても動作するし、electronで包んでデスクトップ版としても動作します。ビルド時のappEnv変数で条件を分けています
-- **packages/mobile**
-  Expo(React Native)で構築された、Citronoteのモバイル版です。
 - **packages/desktop**
   packages/app を Electron で包み、ipcでのAPIや、デスクトップ版でのappDataに保存する処理などが入っている Citronote のデスクトップ版です。
 - **packages/shared**

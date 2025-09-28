@@ -55,7 +55,20 @@ export function registerFsIpc({ store }: { store: AppStateStore }) {
       throw new Error("Invalid locationHandle for fs:readFile");
     }
     const osPath = pathModule.join(locationHandle.path, path);
-    return new Uint8Array(await fs.readFile(osPath));
+    const file = await fs.readFile(osPath).catch((err) => {
+      if ((err as NodeJS.ErrnoException).code === "ENOENT") {
+        return null;
+      }
+      if ((err as NodeJS.ErrnoException).code === "EISDIR") {
+        return null;
+      }
+      throw err;
+    })
+    if (file) {
+      return new Uint8Array(file);
+    } else {
+      throw new Error("File not found or is a directory");
+    }
   });
 
   ipcMain.handle("fs:writeFile", async (event, locationHandle: NotebookMetadata["locationHandle"], path: string, data: Uint8Array | string, options?: { recursive?: boolean }): Promise<void> => {

@@ -1,4 +1,4 @@
-import { BrowserWindow, app } from "electron";
+import { BrowserWindow, app, shell } from "electron";
 import isDev from "electron-is-dev";
 const path = require("node:path");
 
@@ -50,6 +50,18 @@ export function createNotebookSelectorWindow({ page }: { page?: string } = {}) {
   // フォーカス外れた時イベント
   window.on("blur", () => {
     window?.webContents.send("windowFocusChanged", false);
+  });
+
+  window.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' }; // アプリ内で新しいウィンドウを作らない
+  });
+  
+  window.webContents.on('will-navigate', (event, url) => {
+    if (url !== window?.webContents.getURL()) { // 自分のアプリ内ページ以外なら
+      event.preventDefault();
+      shell.openExternal(url);
+    }
   });
 
   return window;

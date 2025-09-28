@@ -1,4 +1,4 @@
-In developing the Markdown editor, we have referred to and reused some code from the following projects.
+In developing the Markdown editor, we have referred to and reused code from the following projects.
 
 We would like to express our gratitude to the project authors for their excellent work.
 

@@ -48,7 +48,7 @@ export default function GetStarted({ changePage }: { changePage: (page: string, 
           }}
           name="新しいノートブックを作成"
           description="新しいノートブックを作成します"
-          onClick={() => changePage("addNotebook", 1)}
+          onClick={() => changePage("newNotebook", 1)}
         />
       </div>
     </>

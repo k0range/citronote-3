@@ -14,10 +14,10 @@ import { useNotebooksManager } from "@/hooks/useNotebooksManager";
 import EditorPane from "./panes/EditorPane";
 
 import { initNotebook } from "./initNotebook";
-import OriginalMdEditor from "@/editors/OriginalMdEditor";
 import ImageEditor from "@/editors/ImageEditor";
 import ScrapEditor from "@/editors/ScrapEditor";
 import PlaintextEditor from "@/editors/PlaintextEditor";
+import MarkdownEditor from "@/editors/MarkdownEditor";
 
 export default function MainPage() {
   const notebooksMgr = useNotebooksManager();
@@ -36,7 +36,7 @@ export default function MainPage() {
           builtinNotetypeEditors: {
             markdown: {
               app: {
-                component: OriginalMdEditor
+                component: MarkdownEditor
               }
             },
             plaintext: {

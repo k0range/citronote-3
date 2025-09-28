@@ -54,5 +54,7 @@
   "notebooksList": "ノートブック一覧",
   "aboutCitronote": "Citronote について",
   "sendFeedback": "フィードバックを送る",
-  "warning": "警告"
+  "warning": "警告",
+  "delete": "削除",
+  "rename": "名前を変更"
 }

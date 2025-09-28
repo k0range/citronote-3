@@ -12,7 +12,7 @@ import { registerIpc } from "./ipc";
 let selectWindow: BrowserWindow | null = null;
 let notebookWindows: Record<string, BrowserWindow> = {}; // notebookId, BrowserWindow
 
-app.setName("citronote");  
+app.setName("citronote3beta");  
 
 if (isDev) {
   app.setPath("userData", path.join(__dirname, "..", "dev-userdata"));

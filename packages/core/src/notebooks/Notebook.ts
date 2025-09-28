@@ -1,6 +1,7 @@
 import { getBuiltinNotetypes } from "../builtin/notetypes/builtinNotetype";
 import { NoteEditor, type NoteMetadata, NotetypeRegistry } from "../notes";
 import type { FsEntry, NotebookFsMgr, NotebookMetadata, NotebookLocationHandle, Folder, NotebookFsMgrClass } from "./types";
+import { PathUtil } from "shared/utils";
 
 async function dirToFolder(dir: FsEntry, fsMgr: NotebookFsMgr): Promise<Folder> {
   // 更に子があるかを掘る
@@ -56,7 +57,7 @@ export class Notebook {
   iconUrl?: string;
   location: "local" | "cloud";
   locationHandle: NotebookLocationHandle;
-  private fsMgr: NotebookFsMgr; // このNotebookのファイル操作に使用するプロバイダ
+  fsMgr: NotebookFsMgr; // このNotebookのファイル操作に使用するプロバイダ
   notetypeRegistry: NotetypeRegistry;
 
   constructor({ metadata, fsMgr }: {
@@ -147,7 +148,7 @@ export class Notebook {
     }
 
     if (!noteName) {
-      const defaultName = "新しいノート"
+      const defaultName = "New Note"
       noteName = defaultName;
       let addtionalNumber = 1;
       
@@ -184,6 +185,20 @@ export class Notebook {
 
   async deleteNote(path: string) {
     await this.fsMgr.delete(path);
+  }
+
+  async renameNote(metadata: NoteMetadata, newName: string) {
+    const newPath = PathUtil.join(PathUtil.dirname(metadata.path), newName + (metadata.notetype?.mainExt ? ("." + metadata.notetype.mainExt) : ""))
+    await this.fsMgr.rename(
+      metadata.path,
+      newPath
+    );
+    return await toNoteMetadata({
+      name: newPath.split("/").pop() || "",
+      path: newPath,
+      fsMgr: this.fsMgr,
+      notetypeRegistry: this.notetypeRegistry,
+    })
   }
 
   async uploadFile(path: string) {

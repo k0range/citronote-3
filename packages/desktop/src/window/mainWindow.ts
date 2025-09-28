@@ -1,4 +1,4 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, shell } from "electron";
 import isDev from "electron-is-dev";
 import { AppStateStore } from "../store";
 import { NotebookMetadata } from "core/notebooks";
@@ -59,6 +59,18 @@ export function createMainWindow({ store, notebookId }: { store: AppStateStore, 
   // フォーカス外れた時イベント
   window.on("blur", () => {
     window.webContents.send("windowFocusChanged", false);
+  });
+
+  window.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' }; // アプリ内で新しいウィンドウを作らない
+  });
+
+  window.webContents.on('will-navigate', (event, url) => {
+    if (url !== window.webContents.getURL()) { // 自分のアプリ内ページ以外なら
+      event.preventDefault();
+      shell.openExternal(url);
+    }
   });
 
   activeWindows.set(notebookId, window);
