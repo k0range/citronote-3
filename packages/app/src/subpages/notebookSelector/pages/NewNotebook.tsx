@@ -33,6 +33,8 @@ function BetaWarning({ text }: { text: string }) {
   )
 }
 
+// すでに存在するフォルダを使う場合、内容をmetaなどで置き換えると警告を出す...?
+
 export default function NewNotebook({
   goBack,
 }: {

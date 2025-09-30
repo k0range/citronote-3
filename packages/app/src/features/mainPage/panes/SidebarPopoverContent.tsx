@@ -6,6 +6,7 @@ import {
   BookCopyIcon,
   NotebookIcon,
   PlusIcon,
+  Settings2Icon,
   SettingsIcon,
   XIcon,
 } from "lucide-react";
@@ -68,7 +69,7 @@ export default function SidebarPopoverContent() {
                 type: "lucide",
                 name: "X",
               },
-              text: t("sidebarPopover.removeNotebook.title"),
+              title: t("sidebarPopover.removeNotebook.title"),
               description: notebook.locationHandle.kind === "electron" ? t("sidebarPopover.removeNotebook.description.desktop", {
                 "location": displayLocation
               }) : t("sidebarPopover.removeNotebook.description.browser"),
@@ -93,15 +94,15 @@ export default function SidebarPopoverContent() {
       </Popover.Close>
       <Popover.Close asChild>
         <MenuActionButton
-          icon={SettingsIcon}
+          icon={Settings2Icon}
           label="Notebook Settings"
           onClick={() => {
             showAlertDialog({
               icon: {
                 type: "lucide",
-                name: "Settings",
+                name: "Settings2",
               },
-              text: "Notebook Settings",
+              title: "Notebook Settings",
               description: "This feature is not yet released.",
               buttons: [
                 { text: "OK", value: "ok", variant: "primary" }
@@ -158,6 +159,26 @@ export default function SidebarPopoverContent() {
             } else if (appEnv.platform === "electron") {
               window.api.openNotebookSelector();
             }
+          }}
+        />
+      </Popover.Close>
+      { /* 設定機能をdeskstop二も持たせる？ */ }
+      <Popover.Close asChild>
+        <MenuActionButton
+          icon={SettingsIcon}
+          label="App Settings"
+          onClick={() => {
+            showAlertDialog({
+              icon: {
+                type: "lucide",
+                name: "Settings",
+              },
+              title: "App Settings",
+              description: "This feature is not yet released.",
+              buttons: [
+                { text: "OK", value: "ok", variant: "primary" }
+              ]
+            })
           }}
         />
       </Popover.Close>

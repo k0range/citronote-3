@@ -1,4 +1,3 @@
-import { initCore } from "core/init";
 import type { Notebook } from "core/notebooks";
 
 import useActiveNotebookStore from "./stores/activeNotebook";
@@ -10,8 +9,6 @@ export async function initNotebook({ notebook }: { notebook: Notebook }) {
 
   setNotebook(notebook);
   refetchFolderTree(notebook);
-  
-  await initCore({});
 
   return;
 }

@@ -1,7 +1,9 @@
+import { StringError } from "../errors";
 import { getBuiltinNotetypes } from "../builtin/notetypes/builtinNotetype";
 import { NoteEditor, type NoteMetadata, NotetypeRegistry } from "../notes";
 import type { FsEntry, NotebookFsMgr, NotebookMetadata, NotebookLocationHandle, Folder, NotebookFsMgrClass } from "./types";
 import { PathUtil } from "shared/utils";
+import { FilePathAlreadyExistsError, FolderPathAlreadyExistsError } from "./errors";
 
 async function dirToFolder(dir: FsEntry, fsMgr: NotebookFsMgr): Promise<Folder> {
   // 更に子があるかを掘る
@@ -96,12 +98,23 @@ export class Notebook {
   }
 
   async newFolder(path: string) {
+    const existingDir = await this.fsMgr.stat(path);
+    if (existingDir) {
+        throw new FolderPathAlreadyExistsError(path);
+    }
+
     await this.fsMgr.mkdir(path);
     const dir = await this.fsMgr.stat(path);
     return await dirToFolder(dir!, this.fsMgr);
   }
 
   async renameFolder(oldPath: string, newPath: string) {
+    // リネーム先が既に存在するかチェック
+    const existingDir = await this.fsMgr.stat(newPath);
+    if (existingDir) {
+        throw new FolderPathAlreadyExistsError(newPath);
+    }
+    
     await this.fsMgr.rename(oldPath, newPath);
     const dir = await this.fsMgr.stat(newPath);
     return await dirToFolder(dir!, this.fsMgr);
@@ -141,10 +154,10 @@ export class Notebook {
   }) {
     const notetype = this.notetypeRegistry.get(notetypeId);
     if (!notetype) {
-      throw new Error(`Unknown notetype: ${notetypeId}`);
+      throw new StringError(`Unknown notetype: ${notetypeId}`);
     }
     if (!notetype.info.mainExt) {
-      throw new Error(`Notetype has no main extension: ${notetypeId}`);
+      throw new StringError(`Notetype has no main extension: ${notetypeId}`);
     }
 
     if (!noteName) {
@@ -159,7 +172,7 @@ export class Notebook {
       }
     } else {
       if (await this.fsMgr.stat(parentPath + "/" + noteName + "." + notetype.info.mainExt) !== null) {
-        throw new Error(`Note already exists: ${noteName}`);
+        throw new FilePathAlreadyExistsError(noteName + "." + notetype.info.mainExt);
       }
     }
 

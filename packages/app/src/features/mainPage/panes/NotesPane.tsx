@@ -84,7 +84,7 @@ export default function NotesPane() {
                     <NotetypeItem
                       icon={type.ui.icon}
                       color={type.ui.color}
-                      displayName={type.ui.displayName}
+                      displayName={t(type.ui.nameKey) || type.ui.fallbackName || type.id}
                       key={index}
                       onClick={async () => {
                         if (!notebook || !folderPath) return;
@@ -100,6 +100,7 @@ export default function NotesPane() {
                       }}
                     />
                   ))}
+                  
                   { /* For SOM */ }
                   <NotetypeItem
                     icon={{ type: "lucide", name: "SquareCheckBig" }}
@@ -112,7 +113,7 @@ export default function NotesPane() {
                           type: "lucide",
                           name: "SquareCheckBig",
                         },
-                        text: "Tasks",
+                        title: "Tasks",
                         description: "This feature is not yet released.",
                         buttons: [
                           { text: "OK", value: "ok", variant: "primary" }
@@ -131,7 +132,7 @@ export default function NotesPane() {
                           type: "lucide",
                           name: "LayoutDashboard",
                         },
-                        text: "Canvas",
+                        title: "Canvas",
                         description: "This feature is not yet released.",
                         buttons: [
                           { text: "OK", value: "ok", variant: "primary" }
@@ -140,6 +141,7 @@ export default function NotesPane() {
                     }}
                   />
                   { /* End For SOM */ }
+
                   <NotetypeItem
                     icon={{ type: "lucide", name: "Upload" }}
                     displayName={t("uploadFile")}

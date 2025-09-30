@@ -27,7 +27,6 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/vite": "^4.1.12",
     "@uiw/react-codemirror": "^4.25.1",
-    "builtin": "workspace:*",
     "core": "workspace:*",
     "desktop": "workspace:*",
     "shared": "workspace:*",

@@ -39,6 +39,7 @@
       "confirm": "削除する"
     }
   },
+  "ok": "OK",
   "back": "戻る",
   "addNotebook": "ノートブックを追加",
   "manageNotebooks": "ノートブックを管理",
@@ -56,5 +57,7 @@
   "sendFeedback": "フィードバックを送る",
   "warning": "警告",
   "delete": "削除",
-  "rename": "名前を変更"
+  "rename": "名前を変更",
+  "fileOrFolderAlreadyExists": "A file or folder {{name}} already exists at this location.",
+  "error": "エラー"
 }

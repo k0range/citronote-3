@@ -1,5 +1,7 @@
+// TODO: html <dialog> 要素を使うようにする
+
 import { createPortal } from "react-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import type { Icon as IconType } from "core/icons";
 import { Button } from "./Button";
 import { Icon } from "./Icon";
@@ -14,7 +16,7 @@ export interface AlertDialogButton {
 
 export interface AlertDialogProps {
   icon?: IconType;
-  text: string;
+  title?: string;
   description?: string;
   buttons?: AlertDialogButton[];
   open: boolean;
@@ -23,17 +25,22 @@ export interface AlertDialogProps {
 
 export function AlertDialog({
   icon,
-  text,
+  title,
   description,
   buttons,
   open,
   onClose,
 }: AlertDialogProps) {
   const [visible, setVisible] = useState(open);
+  const firstButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (open) {
       setVisible(true);
+      // ダイアログが開いたら最初のボタンにフォーカス
+      setTimeout(() => {
+        firstButtonRef.current?.focus();
+      }, 50);
     } else {
       // アニメーションの時間分遅らせて unmount
       const timer = setTimeout(() => setVisible(false), 200);
@@ -46,16 +53,17 @@ export function AlertDialog({
 
   return createPortal(
     <div className={`fixed top-0 left-0 w-screen h-screen bg-[#00000070] z-50 flex items-center justify-center ${styles.overlay} ${open ? styles.open : styles.close}`}>
-      <div className={`bg-background-2 border border-border rounded-lg min-w-[20rem] max-w-[28rem] min-h-58 py-6 px-5 text-color ${styles.dialog} ${open ? styles.open : styles.close}`}>
+      <div className={`bg-background-2 border border-border rounded-lg min-w-[20rem] max-w-[28rem] min-h-58 py-7 px-6 text-color ${styles.dialog} ${open ? styles.open : styles.close}`}>
         {icon && (
           <Icon
             icon={icon}
-            className="w-10 h-10 mx-auto mb-3.5 opacity-50"
+            className="w-10 h-10 mx-auto mb-3 opacity-50"
           />
         )}
-        <h2 className="text-center text-lg opacity-95">{text}</h2>
+        { /* enter shortcut */ }
+        <h2 className="text-center text-[1.05rem]">{title}</h2>
         {description && (
-          <p className="text-center text-xs opacity-70 mt-1.5 mb-5.5">
+          <p className="text-center mt-1 mb-5.5 opacity-80 text-[0.95rem]">
             {description}
           </p>
         )}
@@ -63,6 +71,7 @@ export function AlertDialog({
           {buttons?.map((button, index) => (
             <Button
               key={index}
+              ref={index === 0 ? firstButtonRef : undefined}
               variant={button.variant || "secondary"}
               className="w-full"
               onClick={() => onClose(button.value)}
@@ -78,7 +87,7 @@ export function AlertDialog({
 }
 
 export function showAlertDialog(options: {
-  text: string;
+  title?: string;
   description?: string;
   icon?: IconType;
   buttons: AlertDialogButton[];
@@ -104,7 +113,7 @@ export function showAlertDialog(options: {
       return (
         <AlertDialog
           open={open}
-          text={options.text}
+          title={options.title}
           description={options.description}
           icon={options.icon}
           buttons={options.buttons}

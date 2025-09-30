@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import FolderComp from "../components/Folder";
 
-import { ContextMenu } from "ui";
+import { ContextMenu, showAlertDialog } from "ui";
 
 import useCurrentFolderStore from "../stores/currentFolder";
 import useActiveNotebookStore from "../stores/activeNotebook";
@@ -9,6 +9,7 @@ import useFolderCreationStore from "../stores/folderCreation";
 import useFolderTreeStore from "../stores/folderTree";
 import type { FolderDisplay } from "../stores/folderTree";
 import { t } from "i18next";
+import { FolderPathAlreadyExistsError } from "core/notebooks";
 
 // FOLDER SAKUJO WARN trash
 
@@ -74,6 +75,14 @@ export default function FolderTree({ isRoot, folder, nest = 0 }: {
                 path: newFolder.path
               })
               setCurrentFolderPath(newFolder.path);
+            }).catch((err) => {
+              if (err instanceof FolderPathAlreadyExistsError) {
+                showAlertDialog({
+                  icon: { type: "lucide", name: "AlertTriangle" },
+                  description: t("fileOrFolderAlreadyExists", { name }),
+                  buttons: [{ text: t("ok"), value: "ok", variant: "primary" }]
+                })
+              }
             });
           }}
           onCancel={() => {
@@ -150,6 +159,15 @@ export default function FolderTree({ isRoot, folder, nest = 0 }: {
                 ]
               })
               setCurrentFolderPath(newFolder.path);
+            }).catch((err) => {
+              if (err instanceof FolderPathAlreadyExistsError) {
+                showAlertDialog({
+                  icon: { type: "lucide", name: "AlertTriangle" },
+                  title: t("error"),
+                  description: t("fileOrFolderAlreadyExists", { name }),
+                  buttons: [{ text: t("ok"), value: "ok", variant: "primary" }]
+                })
+              }
             });
           }}
           onCancel={() => {

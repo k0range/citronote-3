@@ -39,6 +39,7 @@
       "confirm": "Remove"
     }
   },
+  "ok": "OK",
   "back": "Back",
   "addNotebook": "Add Notebook",
   "manageNotebooks": "Manage Notebooks",
@@ -56,5 +57,7 @@
   "sendFeedback": "Send Feedback",
   "warning": "Warning",
   "delete": "Delete",
-  "rename": "Rename"
+  "rename": "Rename",
+  "fileOrFolderAlreadyExists": "A file or folder {{name}} already exists at this location.",
+  "error": "Error"
 }

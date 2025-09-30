@@ -18,4 +18,12 @@ export function initI18n() {
     debug: true,
     resources: resources
   });
+  i18next.addResourceBundle('en', 'builtin', {
+    notetype: {
+      markdown: 'Markdown',
+      plaintext: 'Plaintext',
+      scrap: 'Scrap',
+      image: 'Image'
+    }
+  }, true, true);
 }

@@ -5,11 +5,17 @@ import type { NotebookFsMgr } from "../notebooks/types";
 import type { BaseNote } from "./BaseNote";
 
 export interface NoteMetadata {
+  // アプリ内で一時的に扱うためのメタデータ
   name: string;
   path: string;
   notetype?: NotetypeInfo; // Notetypeがない = unknown
   excerpt?: string; // ノートの抜粋（最初の数文字など）。未設定ならundefined
   extLabel?: string;
+}
+
+export interface NoteExtra {
+  // フロントマターや隣のextraファイルなどに保存する、CTRN独自の追加情報
+  pinned?: boolean; // ピン留めされているか
 }
 
 export interface Notetype {
@@ -20,13 +26,17 @@ export interface Notetype {
 }
 
 export interface NotetypeInfo {
+  // TranslationKey!!
   id: string; // "scrap", "task", "plugin:super-note"
   mainExt?: string; // そのノートタイプのメインの拡張子（例：Markdown=.md、Scrap=.ctrnscrap）
   addtionalExts?: string[]; // 追加でそのノートタイプとしてエディタで開ける拡張子。一覧では拡張子のバッジがつく。
   ui: NotetypeUIInfo;
 }
 export interface NotetypeUIInfo {
-  displayName: string;
+  nameKey: string; // i18n key for displayName
+  fallbackName?: string;
+  // displayName: string;
+  // transitionkey pLUGIN!!!!!!! peti smata da!! soso nda fe1
   color?: string;
   icon: Icon;
 }

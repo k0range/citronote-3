@@ -3,6 +3,7 @@ import { useNotebooksManager } from "@/hooks/useNotebooksManager";
 import type { NotebookMetadata } from "core/notebooks";
 import { Icon, SimpleIcon } from "ui";
 import type { Icon as IconType } from "core/icons";
+import { t } from "i18next";
 
 function ActionItem({ icon, name, description, onClick }: { icon: IconType; name: string; description: string; onClick: () => void }) {
   return (
@@ -39,15 +40,15 @@ export default function GetStarted({ changePage }: { changePage: (page: string, 
   return (
     <>
       <SimpleIcon className="w-12 h-12 mx-auto mb-3 opacity-65 mt-4" />
-      <h2 className="text-lg text-center pb-1 opacity-80 mb-6">Citronote へようこそ！</h2>
+      <h2 className="text-lg text-center pb-1 opacity-80 mb-6">Welcome to Citronote!</h2>
       <div className="flex flex-col gap-2">
         <ActionItem
           icon={{
             type: "lucide",
             name: "Plus",
           }}
-          name="新しいノートブックを作成"
-          description="新しいノートブックを作成します"
+          name={t("addNotebook")}
+          description="Create a new notebook folder or open an existing folder as a notebook."
           onClick={() => changePage("newNotebook", 1)}
         />
       </div>

@@ -35,6 +35,25 @@ export class ScrapNoteClass extends BaseNote {
       new TextEncoder().encode(JSON.stringify(this.scraps, null, 2)),
     );
   }
+
+  async editScrap(index: number, newContent: string) {
+    if (index < 0 || index >= this.scraps.length) {
+      throw new Error("Invalid scrap index");
+    }
+    this.scraps[index].content = newContent;
+    await this.fsMgr.writeFile(
+      this.metadata.path,
+      new TextEncoder().encode(JSON.stringify(this.scraps, null, 2)),
+    );
+  }
+
+  async removeScrap(index: number) {
+    this.scraps.splice(index, 1);
+    await this.fsMgr.writeFile(
+      this.metadata.path,
+      new TextEncoder().encode(JSON.stringify(this.scraps, null, 2)),
+    );
+  }
 }
 
 export class ImageNoteClass extends BaseNote {
@@ -61,7 +80,8 @@ export function getBuiltinNotetypes(editors: Record<
         mainExt: "md",
         ui: {
           icon: { type: "lucide", name: "FileText" },
-          displayName: "Markdown",
+          nameKey: "builtin:notetype.markdown",
+          fallbackName: "Markdown",
           color: "#ffcd42",
         }
       },
@@ -74,7 +94,8 @@ export function getBuiltinNotetypes(editors: Record<
         mainExt: "txt",
         ui: {
           icon: { type: "lucide", name: "Type" },
-          displayName: "Plaintext",
+          nameKey: "builtin:notetype.plaintext",
+          fallbackName: "Plaintext",
           color: "#5389fc",
         }
       },
@@ -87,7 +108,8 @@ export function getBuiltinNotetypes(editors: Record<
         mainExt: "scrap",
         ui: {
           icon: { type: "lucide", name: "Scroll" },
-          displayName: "Scrap",
+          nameKey: "builtin:notetype.scrap",
+          fallbackName: "Scrap",
           color: "#ff9742",
         }
       },
@@ -101,7 +123,8 @@ export function getBuiltinNotetypes(editors: Record<
         addtionalExts: ["png", "jpg", "jpeg", "gif", "bmp", "webp", "svg"],
         ui: {
           icon: { type: "lucide", name: "Image" },
-          displayName: "Image",
+          nameKey: "builtin:notetype.image",
+          fallbackName: "Image",
           color: "#b853fc",
         }
       },
