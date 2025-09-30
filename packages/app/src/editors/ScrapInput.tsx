@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "ui";
 
-export default function ScrapInput({ isEditing, onSubmit, onCancelEdit }: { isEditing: boolean; onSubmit: (content: string) => void, onCancelEdit?: () => void }) {
-  const [inputValue, setInputValue] = useState("");
+export default function ScrapInput({ isEditing, onSubmit, onCancelEdit, defaultValue }: { isEditing: boolean; onSubmit: (content: string) => void, onCancelEdit?: () => void, defaultValue?: string }) {
+  const [inputValue, setInputValue] = useState(defaultValue || "");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // 高さ自動調整
@@ -12,6 +12,18 @@ export default function ScrapInput({ isEditing, onSubmit, onCancelEdit }: { isEd
       textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
     }
   }, [inputValue]);
+
+  useEffect(() => {
+    setInputValue(defaultValue || "");
+
+    // focus
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+      // カーソルを末尾に移動
+      const length = textareaRef.current.value.length;
+      textareaRef.current.setSelectionRange(length, length);
+    }
+  }, [defaultValue]);
 
   return (
     <div className="my-4">

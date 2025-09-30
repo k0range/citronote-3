@@ -215,22 +215,31 @@ export class Notebook {
   }
 
   async uploadFile(path: string) {
-    const [fileHandle] = await (window as any).showOpenFilePicker({
-      multiple: false,
-    });
-    if (!fileHandle) {
+    try {
+      const [fileHandle] = await (window as any).showOpenFilePicker({ // electronでもこれ？
+        multiple: false,
+      });
+      if (!fileHandle) {
+        return;
+      }
+      const file = await fileHandle.getFile();
+      const arrayBuffer = await file.arrayBuffer();
+      const uint8Array = new Uint8Array(arrayBuffer);
+      await this.fsMgr.writeFile(path + "/" + file.name, uint8Array, { recursive: true });
+
+      return await toNoteMetadata({
+        name: file.name,
+        path: path + "/" + file.name,
+        fsMgr: this.fsMgr,
+        notetypeRegistry: this.notetypeRegistry,
+      })
+    } catch (e) {
+      if (e instanceof DOMException && e.name === "AbortError") {
+        // キャンセル
+        return;
+      }
+      console.error(e);
       return;
     }
-    const file = await fileHandle.getFile();
-    const arrayBuffer = await file.arrayBuffer();
-    const uint8Array = new Uint8Array(arrayBuffer);
-    await this.fsMgr.writeFile(path + "/" + file.name, uint8Array, { recursive: true });
-
-    return await toNoteMetadata({
-      name: file.name,
-      path: path + "/" + file.name,
-      fsMgr: this.fsMgr,
-      notetypeRegistry: this.notetypeRegistry,
-    })
   }
 }

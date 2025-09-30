@@ -30,6 +30,8 @@ export default function ScrapEditor({ note }: { note: BaseNote }) {
     throw new Error("Invalid note type for ScrapEditor");
   }
 
+  const [scrapDefaultValue, setScrapDefaultValue] = useState<string>("");
+
   const [scrapItems, setScrapItems] = useState<ScrapItem[]>(note.scraps);
   useEffect(() => {
     setScrapItems(note.scraps);
@@ -43,7 +45,7 @@ export default function ScrapEditor({ note }: { note: BaseNote }) {
         {scrapItems.map((scrap, index) => (
           <div
             key={index}
-            className={twMerge("px-3.5 py-2 rounded-lg w-full bg-background-2 border border-border text-color mb-2",
+            className={twMerge("px-3.5 py-2 rounded-lg w-full bg-background-2 border border-border text-color mb-2 whitespace-pre-wrap",
               scrap.isEditing ? "opacity-50 pointer-events-none" : ""
             )}
           >
@@ -65,6 +67,7 @@ export default function ScrapEditor({ note }: { note: BaseNote }) {
                         }
                       }),
                     );
+                    setScrapDefaultValue(scrap.content);
                   }}
                 >
                   <Edit3Icon className="w-3.5 h-3.5 opacity-50 group-hover:opacity-70  transition-opacity duration-200" />
@@ -87,7 +90,7 @@ export default function ScrapEditor({ note }: { note: BaseNote }) {
       </div>
 
       <div className="my-4">
-        <ScrapInput isEditing={!!editingIndex} onSubmit={(content: string) => {
+        <ScrapInput defaultValue={scrapDefaultValue} isEditing={!!editingIndex} onSubmit={(content: string) => {
           if (editingIndex === null) {
             const scrap = {
               date: new Date(),
@@ -100,6 +103,7 @@ export default function ScrapEditor({ note }: { note: BaseNote }) {
             note.editScrap(editingIndex, content);
             setEditingIndex(null);
           }
+          setScrapDefaultValue("");
         }} onCancelEdit={() => {
           // 編集キャンセル
           setScrapItems((prev) => prev.map((item, i) => i === editingIndex ? { ...item, isEditing: false } : item));
