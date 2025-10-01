@@ -2,8 +2,15 @@ import { Routes, Route } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import MainPage from "./features/mainPage/page";
 import NotFound from "./features/otherPages/NotFound";
+import { useAptabase } from "@aptabase/react";
+import { useEffect } from "react";
 
 const App = () => {
+  const { trackEvent } = useAptabase();
+  useEffect(() => {
+    trackEvent("notebook_opened");
+  }, [trackEvent]);
+
   return (
     <>
       <Routes>

@@ -59,5 +59,7 @@
   "delete": "Delete",
   "rename": "Rename",
   "fileOrFolderAlreadyExists": "A file or folder {{name}} already exists at this location.",
-  "error": "Error"
+  "error": "Error",
+  "areYouSure": "Are you sure?",
+  "deleteFolderConfirmation": "Do you want to delete the folder and all its contents? This action cannot be undone."
 }

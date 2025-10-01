@@ -9,6 +9,7 @@ import { useNotesListStore } from "../stores/notesList";
 import HeaderIconButton from "../components/HeaderIconButton";
 import { t } from "i18next";
 import useActiveNotebookStore from "../stores/activeNotebook";
+import { FilePathAlreadyExistsError } from "core/notebooks";
 
 export default function EditorPane() {
   console.log("Render EditorPane");
@@ -45,6 +46,9 @@ export default function EditorPane() {
     if (!notebook || !noteMetadata) {
       return;
     }
+    if (inputingName === noteMetadata.name) {
+      return;
+    }
     try {
       const newMetadata = await notebook.renameNote(noteMetadata, inputingName);
 
@@ -55,6 +59,22 @@ export default function EditorPane() {
 
       noteListStore.updateNote(noteMetadata.path, { name: newMetadata.name, path: newMetadata.path });
     } catch (e: unknown) {
+      if (e instanceof FilePathAlreadyExistsError) {
+        showAlertDialog({
+          icon: {
+            type: "lucide",
+            name: "AlertCircle",
+          },
+          title: t("error"),
+          description: t("fileOrFolderAlreadyExists", { name: inputingName }),
+          buttons: [
+            { text: t("ok"), variant: "primary", value: "ok" }
+          ]
+        });
+        setInputingName(noteMetadata.name);
+        return;
+      }
+
       console.error(e);
       setInputingName(noteMetadata.name);
     }
@@ -74,7 +94,7 @@ export default function EditorPane() {
                     label={t("deleteNote")}
                     onClick={async () => {
                       const ans = await showAlertDialog({
-                        text: t("deleteNote"),
+                        title: t("deleteNote"),
                         description: t("deleteNoteConfirm"),
                         icon: {
                           type: "lucide",

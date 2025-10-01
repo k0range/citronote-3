@@ -201,7 +201,15 @@ export class Notebook {
   }
 
   async renameNote(metadata: NoteMetadata, newName: string) {
-    const newPath = PathUtil.join(PathUtil.dirname(metadata.path), newName + (metadata.notetype?.mainExt ? ("." + metadata.notetype.mainExt) : ""))
+    const ext = metadata.path.split(".").pop();
+
+    const newPath = PathUtil.join(PathUtil.dirname(metadata.path), newName + "." + ext);
+    // リネーム先が既に存在するかチェック
+    const existingDir = await this.fsMgr.stat(newPath);
+    if (existingDir) {
+      throw new FilePathAlreadyExistsError(newPath);
+    }
+
     await this.fsMgr.rename(
       metadata.path,
       newPath

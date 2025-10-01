@@ -1,5 +1,6 @@
 {
   "name": "desktop",
+  "homepage": "https://som.citronote.korange.work/",
   "description": "Citronote",
   "version": "3.0.0",
   "main": "main.js",

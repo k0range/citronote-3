@@ -4,7 +4,7 @@ import packageJsn from "@/../../../package.json";
 
 import { appEnv } from "@/env";
 
-import { HelpCircle, MailboxIcon } from "lucide-react";
+import { HelpCircle, MailboxIcon, MegaphoneIcon } from "lucide-react";
 
 import Titlebar from "../../components/Titlebar";
 import IconButton from "./components/IconButton";
@@ -19,8 +19,20 @@ import { useNotebooksManager } from "@/hooks/useNotebooksManager";
 import { t } from "i18next";
 // import { Trans } from "react-i18next";
 import { twMerge } from "tailwind-merge";
+import { useAptabase } from "@aptabase/react";
+
+interface Announcement {
+  content: string;
+  link?: string;
+  date?: string;
+}
 
 export default function NotebookSelector() {  
+  const { trackEvent } = useAptabase();
+  useEffect(() => {
+    trackEvent("notebook_selector_opened");
+  }, [trackEvent]);
+
   const [currentPage, setCurrentPage] = useState("");
   const [firstPage, setFirstPage] = useState("");
   const [direction, setDirection] = useState(1); // 1=右スライド, -1=左スライド
@@ -46,6 +58,15 @@ export default function NotebookSelector() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // load announcement data
+  const [announcement, setAnnouncement] = useState<Announcement | null>(null);
+  useEffect(() => {
+    const response = fetch("https://som.citronote.korange.work/announcements.json");
+    response.then(res => res.json()).then((data: Announcement) => {
+      setAnnouncement(data);
+    });
+  }, [])
   
   return (
     <div className="flex flex-col h-full">
@@ -63,6 +84,22 @@ export default function NotebookSelector() {
             <div className="text-xs mt-3 opacity-50"><span className="text-primary font-bold">{t("notebookSelector.betaVersionLabel")}</span> / Version {packageJsn.version}</div>
           </div>
           <div>
+            {announcement && (
+              <div className="border-border border px-3 py-3 rounded-lg bg-background-2">
+                <div className="flex items-center text-xs   opacity-70 mb-2">
+                  <MegaphoneIcon className="inline h-4 w-4 mr-2" />
+                  Announcement from the developer
+                </div>
+                <div className="text-xs">
+                  <div className="opacity-95">
+                    {announcement.content}
+                  </div>
+                  {announcement.link && (
+                    <a className="block text-primary mt-1.25" href={announcement.link}>Learn more →</a>
+                  )}
+                </div>
+            </div>
+            )}
             { /* <div className="opacity-95 text-sm hiddena">
               <Trans i18nKey="notebookSelector.readAboutBeta">
                 使用前に、

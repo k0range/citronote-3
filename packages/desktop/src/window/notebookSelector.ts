@@ -23,6 +23,7 @@ export function createNotebookSelectorWindow({ page }: { page?: string } = {}) {
       contextIsolation: true,
       nodeIntegration: false,
       preload: path.join(__dirname, "preload.js"),
+      webSecurity: false // 仮！！お知らせを読み込むため
     },
     resizable: false,
     maximizable: false,

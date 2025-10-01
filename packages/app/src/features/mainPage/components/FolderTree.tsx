@@ -117,10 +117,22 @@ export default function FolderTree({ isRoot, folder, nest = 0 }: {
             label: t("delete"),
             disabled: isRoot,
             icon: { type: "lucide", name: "Trash2" },
-            onSelect: () => {
-              notebook?.deleteFolder(folder.path).then(() => {
-                folderTreeStore.removeFolder(folder.path);
+            onSelect: async () => {
+              // ドロップダウンなど、マウスの動きが少ないコンポーネントにしたほうがUX的に良いかも
+              const result = await showAlertDialog({
+                icon: { type: "lucide", name: "AlertTriangle" },
+                title: t("areYouSure"),
+                description: t("deleteFolderConfirmation", { name: folder.name }),
+                buttons: [
+                  { text: t("delete"), value: "delete", variant: "primary" },
+                  { text: t("cancel"), value: "cancel", variant: "text" },
+                ]
               })
+              if (result === "delete") {
+                notebook?.deleteFolder(folder.path).then(() => {
+                  folderTreeStore.removeFolder(folder.path);
+                })
+              }
             }
           },
         ]}>

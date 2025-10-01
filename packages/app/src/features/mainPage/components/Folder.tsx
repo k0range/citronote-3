@@ -103,7 +103,7 @@ export default function Folder(props: FolderProps) {
             onFocus={(e) => e.currentTarget.select()}
             onClick={(e) => e.stopPropagation()}
             className="bg-transparent w-full no-focus-outline"
-            placeholder={props.initialValue || "フォルダ名"}
+            placeholder={props.initialValue || ""}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 props.onSubmit(e.currentTarget.value);

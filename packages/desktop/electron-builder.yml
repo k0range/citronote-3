@@ -22,9 +22,12 @@ win:
   target:
     - nsis
     - portable
+  icon: "resources/icons"
 
 linux:
-  target: AppImage
+  target:
+    - deb
+    - tar.gz
 
 nsis:
   include: resources/installer.nsh

@@ -52,8 +52,8 @@ export function AlertDialog({
   if (!visible) return null;
 
   return createPortal(
-    <div className={`fixed top-0 left-0 w-screen h-screen bg-[#00000070] z-50 flex items-center justify-center ${styles.overlay} ${open ? styles.open : styles.close}`}>
-      <div className={`bg-background-2 border border-border rounded-lg min-w-[20rem] max-w-[28rem] min-h-58 py-7 px-6 text-color ${styles.dialog} ${open ? styles.open : styles.close}`}>
+    <div className={`fixed top-0 left-0 w-screen h-screen bg-[#00000070] z-50 flex items-center justify-center ${styles.overlay} ${open ? styles.open : styles.close}`} onClick={() => onClose(null)}>
+      <div className={`bg-background-2 border border-border rounded-lg min-w-[20rem] max-w-[28rem] min-h-58 py-7 px-6 text-color ${styles.dialog} ${open ? styles.open : styles.close}`} onClick={(e) => e.stopPropagation()}>
         {icon && (
           <Icon
             icon={icon}
