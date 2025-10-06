@@ -52,9 +52,28 @@ This repository uses a monorepo with pnpm workspaces. Below are the packages and
 - **packages/shared**  
   Contains common utilities used by many packages.
 
-## 📜 License
+## Information about Hackatime projects
+The Summer of Making "Citronote 3" project has several Hackatime projects linked to it, and this is one of them, the app itself that is currently available.
 
-This repository is currently public, but a license has not been decided yet.  
-**Until a license is chosen, this repository is considered ARR (All Rights Reserved).**
+For other Hackatime projects, please see these:
 
-It will be released under an open source license soon. In the meantime, if you wish to fork or use it in any way, please contact me first.
+* **`citronote`**
+  - This is the originally developed codebase for Citronote 3. Since we were inexperienced with large-scale development, the codebase became chaotic, making further development difficult, so a new codebase was created.
+* **`citronote-3`**
+  - **This repository**
+  - A new codebase created because the `citronote` codebase had become hard to maintain. Some parts of the code are directly reused from `citronote`.
+* **`citronote-3-git`**
+  - **This repository**
+  - After accidentally breaking the `citronote-3` working directory due to incorrect Git operations, this is a git clone in a new folder. Its contents are the same as `citronote-3`.
+* **`citronote-3-som-site`**
+  - The site for the demo page created initially.
+* **`citronote-3-som-demo`**
+  - Since we weren’t entirely satisfied with `citronote-3-som-site`, we reused some parts and created a separate codebase.
+  - Used as a demo link on Summer of Making.
+  - Deployed here: https://som.citronote.korange.work/
+* **`cmexpt-4citronote`**
+  - An experimental app made when trying to use Codemirror 6 as a Markdown editor.
+* **`citron-editor-cm` / `citronote-editor`**
+  - A prototype made when attempting to create a custom Markdown editor.
+* **`prosemark-ctrn3-tempfork`**
+  - An internal fork of [ProseMark](https://github.com/jsimonrichard/ProseMark/), currently used as the Markdown editor.
