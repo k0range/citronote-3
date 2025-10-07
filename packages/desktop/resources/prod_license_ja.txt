@@ -1,0 +1,12 @@
+﻿Citronoteのご利用にあたり、以下の全ての事項に同意する必要があります。
+
+* ライセンス: これは、Citronoteのソースコードに適用されるオープンソースライセンスです。
+  https://github.com/citronote/citronote/LICENSE
+
+* 利用規約: これは、Citronoteおよびその他関連サービスを使用する際のルールを定めたものです。
+  https://citronote.com/terms/
+
+* プライバシーポリシー: これは、Citronoteがユーザーから収集する情報の種類とその取り扱い方法を説明したものです。
+  https://citronote.com/privacy/
+
+その他、Citronoteクラウドサービスなど、一部のサービスにはこれに加えた追加の事項が適用される場合があります。

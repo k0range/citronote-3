@@ -1,0 +1,11 @@
+packages:
+  - packages/*
+
+ignoredBuiltDependencies:
+  - '@swc/core'
+  - esbuild
+
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - electron
+  - electron-winstaller

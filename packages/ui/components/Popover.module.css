@@ -1,0 +1,49 @@
+.PopoverContent {
+  will-change: opacity, transform;
+
+  --tooltip-bg: var(--color-background-1);
+  --tooltip-border: var(--color-border);
+}
+
+.PopoverContent > span {
+  left: 12px !important;
+  right: auto !important;
+}
+
+/* 開くとき */
+.PopoverContent[data-state="open"] {
+  animation: fadeIn 100ms ease-out forwards;
+}
+
+/* 閉じるとき */
+.PopoverContent[data-state="closed"] {
+  animation: fadeOut 100ms ease-in forwards;
+}
+
+/* Arrow を二重にして枠線を表現 */
+.arrowFill {
+  fill: var(--tooltip-bg);
+}
+.arrowBorder {
+  fill: var(--tooltip-border);
+  transform: translateX(1.5px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

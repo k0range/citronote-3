@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "composite": true,
+    "incremental": true,
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src", "../ui/components/Button.tsx", "../ui/components/Label.tsx", "../ui/components/MenuActionButton.tsx", "../ui/components/Popover.tsx", "../ui/components/RadioGroup.tsx", "../ui/components/SlidePages.tsx", "src/components/Titlebar.tsx", "../ui/components/Tooltip.tsx", "../ui/components/LogoType.tsx", "../ui/components/SimpleIcon.tsx", "../ui/components/ErrorBoundary.tsx", "global.d.ts"],
+}

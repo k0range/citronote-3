@@ -1,0 +1,44 @@
+appId: work.korange.citronote3beta
+productName: Citronote 3 Beta
+directories:
+  output: build
+  buildResources: resources
+files:
+  - from: dist
+    to: .
+    filter:
+      - "**/*"
+  - package.json
+#extraResources:
+#  - from: resources/
+#    to: resources
+#    filter:
+#      - "**/*"
+
+mac:
+  target: dmg
+
+win:
+  target:
+    - nsis
+    - portable
+  icon: "resources/icons"
+
+linux:
+  target:
+    - deb
+    - tar.gz
+
+nsis:
+  include: resources/installer.nsh
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  displayLanguageSelector: true
+  multiLanguageInstaller: true
+  installerLanguages:
+    - "en_US"
+    - "ja_JP"
+  installerIcon: resources/installer.ico
+  uninstallerIcon: resources/icon.ico
+  installerHeaderIcon: resources/installer.ico
+  installerSidebar: resources/installerSidebar.bmp

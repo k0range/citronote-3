@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@source "../../../builtin";
+@source "../../../ui";
+
+@plugin "@tailwindcss/container-queries";
+
+#root {
+  height: 100vh;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+:focus {
+  outline: none;
+  box-shadow: none;
+}
+:focus-visible {
+  outline: 2px solid var(--color-border);
+}
+:focus-visible[class*="no-focus-outline"] {
+  outline: none;
+}
+:focus-visible:not([style*="border-radius"]):not([class*="rounded"], [class*="no-focus-outline"]) {
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 16px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.shadow {
+  box-shadow: 0 0px 28px rgb(0 0 0 / 0.4), 0 0px 10px rgb(0 0 0 / 0.2);
+}
+
+@theme inline {
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-color: var(--theme-color);
+  --color-background-0: var(--theme-background-0);
+  --color-background-1: var(--theme-background-1);
+  --color-background-2: var(--theme-background-2);
+  --color-selected: var(--theme-selected);
+  --color-hover: var(--theme-hover);
+  --color-border: var(--theme-border);
+  --color-primary: var(--theme-primary);
+  --color-secondary: var(--theme-secondary);
+  --color-success: var(--theme-success);
+  --color-danger: var(--theme-danger);
+  --color-warning: var(--theme-warning);
+  --color-info: var(--theme-info);
+}
+
+[data-theme='dark'] {
+  --theme-color: white;
+  --theme-background-0: #1f1f1f;
+  --theme-background-1: #212121;
+  --theme-background-2: #252525;
+  --theme-selected: #2f2f2f;
+  --theme-hover: #2f2f2f80;
+  --theme-border: #424242;
+  --theme-primary: #3b82f6;
+  --theme-primary: #ea9f07;
+  --theme-secondary: #343434;
+  --theme-success: #53e850;
+  --theme-danger: #e53e3e;
+  --theme-warning: #e8d150;
+  --theme-info: #3b82f6;
+}
+
+[data-theme='light'] {
+  --theme-color: #434343;
+  --theme-background-0: #ffffff;
+  --theme-background-1: #ffffff;
+  --theme-background-2: #ffffff;
+  --theme-selected: #f0f0f0;
+  --theme-hover: #f8f8f8;
+  --theme-border: #dcdcdc;
+  --theme-primary: #3b82f6;
+  --theme-secondary: #e5e5e5;
+  --theme-success: #53e850;
+  --theme-danger: #e53e3e;
+  --theme-warning: #e8d150;
+  --theme-info: #3b82f6;
+}
