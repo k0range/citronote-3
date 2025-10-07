@@ -171,6 +171,7 @@ export default function NewNotebook({
               {t("browse")}
             </Button>
           </div>
+          <div className="mt-1.75 text-xs opacity-50">* Please create a new folder and then select it.</div>
         </>
       )}
 
@@ -198,6 +199,7 @@ export default function NewNotebook({
             </Button>
             <div>{folderHandle?.name}</div>
           </div>
+          <div className="mt-1.75 text-xs opacity-50">* Please create a new folder and then select it.</div>
         </>
       )}
 
